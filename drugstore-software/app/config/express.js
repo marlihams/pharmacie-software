@@ -1,4 +1,5 @@
-var express = require('express');
+var express = require('express'),
+	passport=require('passport');
    
 
 module.exports = function() {
@@ -14,19 +15,27 @@ module.exports = function() {
 	    // view engine setup
 	app.set('views', path.join(__dirname, '../views'));
 	app.set('view engine', 'ejs');
+
+	
 	// uncomment after placing your favicon in /public
 	//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 	app.use(logger('dev'));
-	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(bodyParser.json());
 	app.use(cookieParser());
 	app.use(express.static(path.join(__dirname, '../public')));
+	//initialisation of passport module
+	app.use(passport.initialize());
+	// app.use(passport.session());
+
 
 
 
 	/* begino of the  routes section */
 
-	     require('../routes/index.js')(app);
+	   require('../routes/index.js')(app),
+	   require('../routes/users.routes.js')(app),
+	   require('../routes/home.routes.js')(app);
 
 	/*end of the routes section */
 

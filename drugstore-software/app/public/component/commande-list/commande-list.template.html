@@ -1,0 +1,25 @@
+<div class="daily-sale-commande-section">
+				<div class="panel panel-default">
+				  <div class="panel-heading">
+				 	
+				    <h3 class="panel-title ">Commandes 
+
+				    </h3>
+				     
+				  </div>
+				  <div class="panel-body">
+				   	<div class="list-group">
+
+						  <a href="#" class="list-group-item" ng-repeat="commande in $ctrl.commandes">{{commande.title}}
+						  <span class=" w3-right w3-margin-right">{{commande.payer ? "oui":"non" }}</span>
+						  </a>
+					</div>
+				  </div>
+				  <div class="panel-footer">
+					  <div class="extend-icon">
+					 	 <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+						</div>
+					</div>
+
+				</div>
+</div>

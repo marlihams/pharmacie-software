@@ -10,7 +10,6 @@ var ProduitSchema = new Schema({
     description: String,
     prixAchat: Number,
     prixVente: Number,
-    image: Buffer,
     details:[
     {
     	emplacement:String,

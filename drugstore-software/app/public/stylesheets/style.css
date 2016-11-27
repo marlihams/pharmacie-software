@@ -1,8 +1,438 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+
+
+html{
+	min-height: 100%;
+	position:relative;
+
 }
 
-a {
+
+body {
+ position: absolute;
+  font: 17px "Lucida Grande", Helvetica, Arial, sans-serif;
+  
+  height: 100%;
+  width: 100%;
+  overflow-x:hidden;
+
+}
+
+
+#view-frame,#auth-view-container,#home-view-container{
+	position: absolute;
+	height: 100%;
+  	width: 100%;
+  	margin: auto;
+ 
+}
+
+
+/*  -----------registration and login page-------------------*/
+
+#auth-view-container{
+	background: transparent url("../img/bien-etre.jpg") no-repeat fixed;
+  background-size:cover; 
+
+}
+
+#auth-view-container .page-container{
+	 background-color: rgba(49,67,89,0.8);
+    color: #fff;
+	padding:auto;
+	width:370px;
+	height: 55%;
+	margin:100px auto 45px;
+	padding:45px;
+}
+
+#auth-view-container  .registration{
+	 margin:70px auto;
+  padding-left:50px;
+}
+
+#auth-view-container .registration a{
+	
+	 color: #fff;
+	 text-decoration: underline;
+	 vertical-align: middle;
+}
+
+
+
+/*a {
   color: #00B7FF;
+}*/
+
+
+/*  -----------Home page-------------------*/
+
+	
+
+#home-view-container{
+
+
+}
+	/*  -----------Home page Header-------------------*/
+.section-top{
+	height: 9%;
+/*	box-shadow: 0px 4px 10px -5px black;
+*/	box-shadow: 0px 10px 1px -5px black;
+	width: 100%;
+	 padding:5px;
+	
+	
+}
+
+#home-view-container .home-view-body{
+	height: 90%;
+}
+
+#header-container{
+	display: flex;
+	justify-content: space-between;
+	margin-top:5px;
+
+	
+
+}
+#header-container .header-section{
+ padding:auto;
+ 	/*width:33%;*/
+ 	margin-top:auto;
+	margin-bottom: auto;
+ 	
+}
+
+.header-section-right,.header-section-left{
+	display: flex; 
+	justify-content: flex-end;
+
+
+}
+.header-section-right > div,.header-section-left > div{
+	
+	margin-top:auto;
+	margin-bottom: auto;
+	font-size:17px;
+	cursor: pointer;
+
+}
+.v-separator {
+    content: "";
+    width: 0px;
+    height: 40px;
+    margin: 5px;
+    border-left: 1px solid #b4b4b4;
+    padding: 5px;
+}
+
+.header-section h3{
+	
+	margin-top:10px;
+}
+.header-section-home{
+	margin-left:15px;
+	height: 30px;
+
+	padding-top:8px;
+	
+}
+/*header{
+
+	box-shadow: 3px 3px 5px;
+	   box-shadow: 0px 4px 15px -5px black;
+	   #474343
+}*/
+
+
+.info{
+	color:green;
+}
+
+.menu-link:hover{
+	padding-bottom: 10px;
+	border-bottom:2px solid red;
+	
+	cursor: pointer;
+}
+
+
+
+
+		/*  -----------Home page left section-------------------*/
+.section-left{
+height: 100%;
+
+padding-right:0px;
+background-color:black ;
+color:#F4F1F1;
+
+}
+.section-left a{
+	/*color:white;*/
+}
+
+.daily-sale-section{
+
+height: 10%;
+width: 100%;
+margin:0px; 
+}
+
+.daily-sale-menu{
+	display: flex;
+	justify-content: space-around;
+	margin-top:15px;
+
+
+}
+
+.daily-sale-menu >div {
+	
+}
+.daily-sale-commande-section{
+	
+	height: 70%;
+	width: 100%;
+	margin-top:25px; 
+}
+
+.daily-sale-commande-section .panel-default{
+/*	height: 100%;
+*/}
+.daily-sale-body{
+	padding-left:20px;
+	margin-top: 30px; 
+
+}
+
+.borderless tr, .borderless td{
+ border:none !important;
+}
+
+.table-price{
+	text-align: center;
+}
+
+
+.panel-title{
+	text-align: center;
+}
+
+.extend-icon{
+	text-align: center;
+	cursor: pointer;
+	color:black;
+	
+}
+
+.daily-sale-validate{
+	width:50%;
+	margin: auto;
+	margin-bottom: 10px;
+}
+
+/*  -----------Home page left section-------------------*/
+.section-right{
+
+height: 100%;
+background-color: #f5f5f5;
+ padding: 10px 30px 0px 10px;
+}
+
+.daily-sale-globale-body{
+
+ height: 85%;
+
+}
+
+
+.drugstore-search-zone{
+	background-color: #f5f5f5;
+
+	height: 60px;
+	
+}
+
+.drugstore-search-zone,.title-drugstore-content,.drugstore-menu-content{
+
+	margin: auto;
+	padding:auto;
+}
+.daily-sale-globale-info{
+	background-color: black;
+	height: 11%;
+}
+
+.daily-sale-globale-info-panel {
+	 display:flex;
+	 justify-content:space-between;
+	 margin: auto;
+	
+}
+
+.daily-sale-globale-info-panel h5{
+		color:white;
+}
+
+.daily-sale-globale-info-panel p{
+	margin-left:-20px; 
+}
+
+.title-drugstore-content{
+	background-color: #f5f5f5 !important;
+	
+	height: 50px;
+	
+}
+
+.drugstore-menu-content ,.title-drugstore-content{
+	width: 98%;
+}
+.title-drugstore-content{
+	margin-bottom: 30px;
+}
+.drugstore-search-zone {
+	
+}
+
+.drugstore-search-zone-only{
+
+	width: 50%;
+	margin-top:5px; 
+	
+}
+
+
+.drugstore-search-zone-input{
+
+	margin-top: 7px;
+}
+
+
+
+.drugstore-menu-zone a:hover,.drugstore-menu-zone a:active, .drugstore-menu-zone a:visited, .drugstore-menu-zone a:link{
+	 color: black;
+}
+
+
+.menu-selected-element{
+	margin-bottom: 3px;
+	border-bottom: 2px solid red !important; 
+	padding-bottom: 10px !important;
+	color:red !important;
+ 
+}
+
+.drugstore-menu-zone{
+	border-bottom:1px solid #ddd;
+	height:41px;
+	margin-bottom:10px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.center-block {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-group .icon-addon .form-control {
+    border-radius: 0;
+}
+
+.icon-addon {
+    position: relative;
+    color: #555;
+    display: block;
+}
+
+.icon-addon:after,
+.icon-addon:before {
+    display: table;
+    content: " ";
+}
+
+.icon-addon:after {
+    clear: both;
+}
+
+.icon-addon.addon-md .glyphicon,
+.icon-addon .glyphicon, 
+.icon-addon.addon-md .fa,
+.icon-addon .fa {
+    position: absolute;
+    z-index: 2;
+    left: 10px;
+    font-size: 14px;
+    width: 20px;
+    margin-left: -2.5px;
+    text-align: center;
+    padding: 10px 0;
+    top: 1px
+}
+
+.icon-addon.addon-lg .form-control {
+    line-height: 1.33;
+    height: 40px;
+    font-size: 18px;
+    padding: 10px 16px 10px 40px;
+}
+
+.icon-addon.addon-sm .form-control {
+    height: 30px;
+    padding: 5px 10px 5px 28px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.icon-addon.addon-lg .fa,
+.icon-addon.addon-lg .glyphicon {
+    font-size: 18px;
+    margin-left: 0;
+    left: 11px;
+    top: 4px;
+}
+
+.icon-addon.addon-md .form-control,
+.icon-addon .form-control {
+    padding-left: 30px;
+    float: left;
+    font-weight: normal;
+}
+
+.icon-addon.addon-sm .fa,
+.icon-addon.addon-sm .glyphicon {
+    margin-left: 0;
+    font-size: 12px;
+    left: 5px;
+    top: -1px
+}
+
+.icon-addon .form-control:focus + .glyphicon,
+.icon-addon:hover .glyphicon,
+.icon-addon .form-control:focus + .fa,
+.icon-addon:hover .fa {
+    color: #2580db;
 }

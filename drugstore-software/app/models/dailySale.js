@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 
 
 var DailySaleSchema = new Schema({
-
+    title:String,
     chiffreAffaire: Number,
     etat: Boolean,
     benefice: Number,

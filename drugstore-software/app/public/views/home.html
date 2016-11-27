@@ -1,0 +1,119 @@
+<div id="home-view-container">
+<div ui-view="header">
+	<!-- nesting the header  -->
+</div>  
+<div class="row home-view-body">
+	<section class="col-xs-4 col-md-3 section-left" >
+		
+		<div class="daily-sale-section">
+			<div class="daily-sale-menu">
+				<div class="menu-link" >
+					<span ng-class="menuClass">Dialy sales <span>
+					<span class="w3-badge w3-green">42</span>
+					
+				</div>
+				 <div>
+				 	<span class="info">{{etat}}</span>
+				 	
+				 </div>
+				 <div class="menu-link">
+				 	<div class="dropdown">
+						  <div class="dropdown-toggle"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
+						  <span class="caret"></span>
+						  	historique
+						  
+						  </div>
+						  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						  	<li><a href="#">22/11/2016 </a></li>
+						       <li role="separator" class="divider"></li>
+						        <li><a href="#">dialy sale hier </a></li>
+						    <li><a href="#">Another daily sale</a></li>
+						    <li><a href="#">20/10/2014</a></li>
+						  
+						  </ul>
+						</div>
+				 </div>
+
+			</div>
+			
+		</div>
+		<div class="daily-sale-validate">
+			<button type="button" class="btn btn-primary btn-lg btn-block">soumettre</button>
+		</div>
+		<commande-list></commande-list>
+		
+	</section>
+	<section class="col-xs-14 col-md-9 section-right">
+		<div class="panel panel-default daily-sale-globale-info">
+		  <div class="panel-body daily-sale-globale-info-panel">
+		     <div>
+		     <p>faible vente</p>
+		       <h5>50 GNF </h5>
+		     </div>
+		        <div>
+		     <p>vente courante</p>
+		     	<h5>100 GNF </h5>
+		     	  </div>
+		       <div>
+		     <p>meilleur vente</p>
+		     	<h5>200 GNF </h5>
+		       </div>
+		</div>
+		</div>
+
+		<div class="panel panel-default daily-sale-globale-body">
+		  <div class="panel-body">
+		   <div class="drugstore-menu-zone"> 
+
+		   		<nav class="w3-topnav w3-large" >
+ 						 <a href="#" >Mes produits</a>
+ 						 <a  href="#" ng-click="changeMenuClass()" >Mes Clients</a>
+ 						 <a href="#" ng-click="changeMenuClass()" >Mes daily sales</a>
+ 						 <a href="#" ng-click="changeMenuClass()" >Mes depenses</a>
+				</nav>
+
+		   </div>
+
+		  <div class="drugstore-search-zone">
+			  	<div class="container  drugstore-search-zone-only w3-right ">
+        				<div class="col-md-12">
+    						<div class="form-group">
+                				<div class="icon-addon addon-md drugstore-search-zone-input">
+                 				   <input type="text" placeholder="search..." class="form-control" ng-model="searchText">
+                 				   <label for="email" class="glyphicon glyphicon-search" ></label>
+                				</div>
+            				</div>
+		 				</div>
+		  			
+		  		</div>
+		  	</div>
+		  <hr/>
+		 <div class="w3-panel title-drugstore-content w3-text-indigo ">
+			  
+			    	<h3>{{title}}</h3>
+			  
+		  </div>
+		 
+			 <div class="drugstore-menu-content" >
+			   	<table class="w3-table w3-striped w3-centered ">
+
+			   		<tr ng-repeat="element in homeCollection |filter:searchText">
+		 				<td>{{$index + 1}}</td>
+	 					<td>{{element.nom}}</td>
+	 					<td>{{element.quantite}}</td>
+	 					<td>{{element.prixVente}}</td>
+					</tr>
+
+			   	</table>
+			   	
+			   </div>
+		  </div>
+		  
+		</div>
+		 
+
+		
+	</section>
+</div>
+</div>
+

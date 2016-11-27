@@ -1,11 +1,88 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+	    <title>pharmacie-Paris</title>
+	    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+	    
+	    
+	     	<link rel='stylesheet' href='/stylesheets/w3.css' />
+	    <!-- Defines CSS necessary for animations -->
+		
+
+		<link rel='stylesheet' href='/stylesheets/style.css' />
+		<link rel="stylesheet" href="/stylesheets/animation.css" />
+	    
+	     <!-- Javascript file  -->
+		<script src="/bower_components/jquery/dist/jquery.js"></script>
+		<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	    <script src="/bower_components/angular/angular.js"></script>
+	    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+	    <script src="/bower_components/angular-resource/angular-resource.js"></script>
+	   
+	     <!-- Adds animation support in AngularJS -->
+		<script src="/bower_components/angular-animate/angular-animate.js"></script>
+
+
+
+
+		<!-- 		begin service   file            -->	
+
+		<script src="/core/user/user.service.module.js"></script>
+		<script src="/core/user/user.service.js"></script>
+		<script src="/core/dailySaleService/dailySale.service.module.js"></script>
+		<script src="/core/dailySaleService/dailySale.service.js"></script>
+		<script src="/core/core.module.js"></script>
+
+		<!-- 		end service   file            -->	
+		
+		<!-- 		begin Filtre   file            -->	
+		
+
+		<!-- 		end  Filtre   file            -->	
+
+
+
+
+
+
+		 <!-- 		Begin component   file            -->	
+
+
+		<script src="/component/produit-list/produit-list.module.js"></script>
+		<script src="/component/produit-list/produit-list.component.js"></script>
+		<script src="/component/commande-list/commande-list.module.js"></script>
+		<script src="/component/commande-list/commande-list.component.js"></script>
+		<script src="/component/component.module.js"></script>
+
+		 <!-- 		End component   file            -->	
+	
+
+		 <!-- 		Begin controller template   file            -->	
+		<script src="/javascript/template-controller/controller-templates.module.js"></script>
+		<script src="/javascript/template-controller/controller-header.js"></script>
+
+		 	 <!-- 		End controller template   file            -->	
+
+		
+		<script src="/javascript/userAuth/userAuth.module.js"></script>
+		<script src="/javascript/userAuth/userAuth.controller.js"></script>	
+		<script src="/javascript/home/home.module.js"></script>
+		<script src="/javascript/home/home.controller.js"></script>
+	
+
+	 <!-- 		begin route   file            -->	
+	 	<script src="application.module.js"></script>
+	 	<script src="application.js"></script>
+		<script src="/javascript/home/config/home.config.js"></script>
+		
+
+	  <!-- 		end route   file            -->	
+
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <body ng-app="drugStoreSoftware">
+	   
+			<div ui-view  id="view-frame"></div>
+
+		 
   </body>
 </html>

@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
     var ProduitSchema=require("./produit");
 
 var CommandeSchema = new Schema({
+    title:String,
     client: mongoose.Schema.Types.ObjectId,
     clientType:{type:String,enum:['recommandeur','abonner']},
     payer: Boolean,
