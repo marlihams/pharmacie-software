@@ -3,25 +3,31 @@
   <head>
 	    <title>pharmacie-Paris</title>
 	    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
-	    
+	      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
 	    
 	     	<link rel='stylesheet' href='/stylesheets/w3.css' />
 	    <!-- Defines CSS necessary for animations -->
+
 		
 
 		<link rel='stylesheet' href='/stylesheets/style.css' />
 		<link rel="stylesheet" href="/stylesheets/animation.css" />
+		<link rel='stylesheet' href='/stylesheets/myCss.css' />
 	    
+	    <link rel='stylesheet' href='/component/commande-list/commande-list.css' />
+	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	     <!-- Javascript file  -->
 		<script src="/bower_components/jquery/dist/jquery.js"></script>
 		<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 	    <script src="/bower_components/angular/angular.js"></script>
+    	<script src="/bower_components/angular-animate/angular-animate.js"></script>
+    	<!-- <script src="/node_modules/angular-material/angular-material.js"></script> -->
 	    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 	    <script src="/bower_components/angular-resource/angular-resource.js"></script>
 	   
-	     <!-- Adds animation support in AngularJS -->
-		<script src="/bower_components/angular-animate/angular-animate.js"></script>
-
+	     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+	    
+	     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>
 
 
 
@@ -59,7 +65,8 @@
 
 		 <!-- 		Begin controller template   file            -->	
 		<script src="/javascript/template-controller/controller-templates.module.js"></script>
-		<script src="/javascript/template-controller/controller-header.js"></script>
+		<script src="/javascript/template-controller/header-controller.js"></script>
+		<script src="/javascript/template-controller/menu-controller.js"></script>
 
 		 	 <!-- 		End controller template   file            -->	
 
@@ -80,7 +87,6 @@
 
   </head>
   <body ng-app="drugStoreSoftware">
-	   
 			<div ui-view  id="view-frame"></div>
 
 		 

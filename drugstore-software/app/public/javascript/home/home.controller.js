@@ -56,6 +56,8 @@ $scope.userName="Mr diallo";
   // .error(function(data,status){
   // 	console.error(data);
   // }); 
+
+   $scope.currentNavItem = 'page1';
 }
 ]);
 

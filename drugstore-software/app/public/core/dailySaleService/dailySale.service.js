@@ -1,7 +1,6 @@
 angular.module("core.dailySale")
 		.factory('DailySaleService',['$resource',function($resource){
 
-
 /*
 			var DailySaleSchema = new Schema({
     title:String,
@@ -15,12 +14,151 @@ angular.module("core.dailySale")
     	ref:"Commande"
     }]
 });
+
+var commande=new Schema({
+ title:String,
+    client: mongoose.Schema.Types.ObjectId,
+    clientType:{type:String,enum:['recommandeur','abonner']},
+    payer: Boolean,
+    recompense: Boolean,
+    date: {type:Date, default:Date.now},
+    details:[
+    {
+    	produit:[ProduitSchema],
+    	quantite:Number
+    }]
+
+
+
 */
-			var DailySaleService={
+		/*	var DailySaleService={
 
 				key:false,
 				data:[]
-			};
+			};*/
+
+		var DailySaleService={
+
+				key:false,
+				data:[{ //dailysale
+
+					"title":"09/12/2016",
+					"etat"	:" En cours",
+					"commandes":[
+								{ //commande
+			            "title" : "holden",
+			            "details" : [ //produtis
+			            	{
+			            		nom:"aspirine 500mg",
+			            		quantite:2
+			            	},
+			            	{
+			            		nom:"nivaquine 500mg",
+			            		quantite:2
+
+			            	},
+			            	{
+			            		nom:"paracetamol 100mg",
+			            		quantite:2
+
+			            	},
+			            	{
+			            		nom:"acétylsalicylique 500mg",
+			            		quantite:2
+
+			            	}
+
+			            		]
+			        },
+			        { //commande
+			            "title" : "1234572197",
+			            "details" : [//produtis
+			            	{
+			            		nom:"aspirine 500mg",
+			            		quantite:2
+			            	},
+			            	{
+			            		nom:"nivaquine 500mg",
+			            		quantite:2
+
+			            	},
+			            	{
+			            		nom:"paracetamol 500mg",
+			            		quantite:2
+
+			            	},
+			            	{
+			            		nom:"acétylsalicylique 500mg",
+			            		quantite:2
+
+			            	}
+
+			            ]
+			        },
+				]
+			},
+			{ //dailysale
+
+					"title":"09/12/2016",
+					"etat"	:" En cours",
+					"commandes":[
+								{ //commande
+			            "title" : "holden",
+			            "details" : [ //produtis
+			            	{
+			            		nom:"aspirine 500mg",
+			            		quantite:2
+			            	},
+			            	{
+			            		nom:"nivaquine 500mg",
+			            		quantite:2
+
+			            	},
+			            	{
+			            		nom:"paracetamol 100mg",
+			            		quantite:2
+
+			            	},
+			            	{
+			            		nom:"acétylsalicylique 500mg",
+			            		quantite:2
+
+			            	}
+
+			            		]
+			        },
+			        { //commande
+			            "title" : "1234572197",
+			            "details" : [//produtis
+			            	{
+			            		nom:"aspirine 500mg",
+			            		quantite:2
+			            	},
+			            	{
+			            		nom:"nivaquine 500mg",
+			            		quantite:2
+
+			            	},
+			            	{
+			            		nom:"paracetamol 500mg",
+			            		quantite:2
+
+			            	},
+			            	{
+			            		nom:"acétylsalicylique 500mg",
+			            		quantite:2
+
+			            	}
+
+			            ]
+			        },
+				]
+			}
+		]
+				
+	};
+
+		
 			 
 			DailySaleService.request=function(){
 
@@ -87,25 +225,25 @@ angular.module("core.dailySale")
 
 			*/
 			DailySaleService.getDailySaleById=function(dailysaleId){
-
-				var lookCommand=function(){
 				
-				 return	DailySaleService.data.find(function(element){
+				 return	DailySaleService.getWeeklyDailySale().find(function(element){
 
 					 	return element.id==dailysaleId;
 					});
 				};
 
-				if (DailySaleService.data.length==0 || DailySaleService.key){
-
-					DailySaleService.getWeeklyDailySale(lookCommand);
-				}
-				else{
-
-					 return lookCommand();
-				}
 
 			};
+
+
+		/*	DailySaleService.totalProduit=function(dailysaleId){
+					
+					var total=0;
+				var currentDailySale=DailySaleService.getDailySaleById(dailysaleId);
+				for (var i=0, commandes=currentDailySale.commandes;)
+			}*/
+
+
 
 			return DailySaleService;
 

@@ -1,1 +1,1 @@
-angular.module('drugStoreComponent', [/*'produitList','commandeList'*/]);
+angular.module('drugStoreComponent', ['commandeList']);

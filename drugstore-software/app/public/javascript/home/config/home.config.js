@@ -15,7 +15,24 @@ angular.module('drugStoreSoftware')
             'header@home': { 
               templateUrl: 'views/templates/header.html',
               controller:'HeaderController'
+             },
+             'menu@home':{
+              templateUrl :'views/templates/menu.html',
+              controller:'MenuController'
+             },
+             'clients@home':{
+               templateUrl:'views/templates/menuClients.html'
+             },
+             'produits@home':{
+               templateUrl:'views/templates/menuProduits.html'
+             },
+             'dailySales@home':{
+               templateUrl:'views/templates/menuDailySales.html'
+             },
+             'depenses@home':{
+               templateUrl:'views/templates/menuDepenses.html'
              }
+
          },
           resolve:{
             // loading all the data from the home page.
@@ -28,7 +45,7 @@ angular.module('drugStoreSoftware')
             //           return {status:status,data:data};
             //       });
           }
-        });
+        })
     }]);
 
 

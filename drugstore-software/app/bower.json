@@ -13,5 +13,8 @@
     "angular-ui-router": "v1.0",
     "bootstrap": "3.3.x",
     "jquery": "2.2.x"
-  }
+  },
+  "resolutions": {
+  "angular": "1.5.x"
+}
 }
