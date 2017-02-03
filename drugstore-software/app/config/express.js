@@ -35,7 +35,10 @@ module.exports = function() {
 
 	   require('../routes/index.js')(app),
 	   require('../routes/users.routes.js')(app),
-	   require('../routes/home.routes.js')(app);
+	   require('../routes/dailySale.routes.js')(app);
+	   require('../routes/produit.routes.js')(app);
+	   require('../routes/commande.routes.js')(app);
+	   require('../test_data/fill_database.js')(app);
 
 	/*end of the routes section */
 

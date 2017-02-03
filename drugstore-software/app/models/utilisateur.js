@@ -42,7 +42,7 @@ UtilisateurSchema.methods.generateJWT = function() {
 
   // set expiration to 1 days
   var today = new Date();
-  var exp = new Date(today);
+  var exp = new Date();
   exp.setDate(today.getDate() +1);
 
   return jwt.sign({

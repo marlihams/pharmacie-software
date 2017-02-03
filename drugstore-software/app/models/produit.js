@@ -13,7 +13,7 @@ var ProduitSchema = new Schema({
     details:[
     {
     	emplacement:String,
-    	expirationDate:Date,
+    	expirationDate:{type:Date,required:true},
     	quantite:Number
 
     }]

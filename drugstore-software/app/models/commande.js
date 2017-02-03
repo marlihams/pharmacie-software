@@ -7,16 +7,62 @@ var mongoose = require('mongoose'),
 
 var CommandeSchema = new Schema({
     title:String,
-    client: mongoose.Schema.Types.ObjectId,
-    clientType:{type:String,enum:['recommandeur','abonner']},
+    client: {type:mongoose.Schema.Types.ObjectId,default:null},
+    clientType:{type:String,enum:['recommandeur','abonner','autre'],default:'autre'},
     payer: Boolean,
+    montantPayer:Number,
     recompense: Boolean,
     date: {type:Date, default:Date.now},
-    details:[
+    produits:[
     {
-    	produit:[ProduitSchema],
-    	quantite:Number
+    	produit:ProduitSchema,
+    	quantite:{type:Number,required:true}
     }]
 });
 
-mongoose.model('Commande', CommandeSchema);
+
+/**
+*  calculate the turnover for a commande
+* @function calculateChiffreAffaire 
+* @params {Request} command
+* @return {Number}  
+*/
+
+CommandeSchema.methods.calculChiffreAffaire=function(){
+    var produits=this.produits;
+    var total=0;
+    console.log(produits);
+
+    return produits.reduce((accum,produit,index)=>{
+    /*    console.log("produit "+ produit);
+        console.log("accumm"+ accum);*/
+         total=produit.produit.prixVente * produits[index].quantite;
+            console.log(total);
+            return  accum==0? total: (accum+total);
+
+     },0);
+
+};
+
+/**
+* calculate the benefit of a commande
+* @function calculBenefice 
+* @params {Request} command
+* @return {Number}  
+*/
+
+CommandeSchema.methods.calculBenefice=function(){
+    var produits=this.produits;
+    var total=0;
+     return produits.reduce((accum,produit,index)=>{
+         total=(produit.produit.prixVente-produit.produit.prixAchat) * produits[index].quantite;
+            
+            return  accum==0? total:(accum+total);
+
+     },0);
+
+};
+
+
+
+mongoose.model('Commande', CommandeSchema,"commandes");
