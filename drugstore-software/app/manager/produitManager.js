@@ -58,9 +58,10 @@ exports.getAll=function(req,res){
 
 exports.create=function(req,res,callback){
 
+
 	console.log(req.body);
 	console.log("display Produit");
-	var produit=new Produit(req.body);
+	var produit=new Produit(req.body.data? req.body.data:req.body);
 	console.log(produit);
 
 	produit.save(function(err,prod){
@@ -122,10 +123,11 @@ exports.updateProduit=function(req,res){
 
 	console.log("updating the product having the _id : "+req.produit.id);
 
+	var updatedProduit=req.body.data ? req.body.data : req.body;
 	
 	// Array.prototype.push.apply(req.body.details,req.produit.details);
 
-	 Produit.findByIdAndUpdate(req.produit.id,req.body,{new:true},function(err,produit){
+	 Produit.findByIdAndUpdate(req.produit.id,updatedProduit,{new:true},function(err,produit){
 
 	 	if (err){
 	 		return next(err);

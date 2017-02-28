@@ -11,8 +11,12 @@ var CommandeSchema = new Schema({
     clientType:{type:String,enum:['recommandeur','abonner','autre'],default:'autre'},
     payer: Boolean,
     montantPayer:Number,
+    chiffreAffaire:{type:Number,default:0},
+    totalProduits:{type:Number,default:0},
+    benefice:{type:Number,default:0},
     recompense: Boolean,
     date: {type:Date, default:Date.now},
+    dailySaleId:{type:mongoose.Schema.Types.ObjectId,default:null},
     produits:[
     {
     	produit:ProduitSchema,
@@ -58,6 +62,17 @@ CommandeSchema.methods.calculBenefice=function(){
          total=(produit.produit.prixVente-produit.produit.prixAchat) * produits[index].quantite;
             
             return  accum==0? total:(accum+total);
+
+     },0);
+
+};
+
+CommandeSchema.methods.getTotalProduit=function(){
+    var produits=this.produits;
+
+     return produits.reduce((accum,produit)=>{
+            
+            return   accum +produit.quantite;
 
      },0);
 

@@ -1,6 +1,6 @@
 
 
-<div class="md-accordion" ng-repeat="data in $ctrl.accordionData">
+<!-- <div class="md-accordion" ng-repeat="data in $ctrl.accordionData">
     <md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
         <div class="md-toolbar-tools">
             <h6>
@@ -18,5 +18,66 @@
 		</ul>
 
     </div>
-</div>
+</div> -->
 
+   <!-- add `multiple` attribute to allow multiple sections to open at once -->
+<v-accordion class="vAccordion--default" multiple>
+
+  <!-- add expanded attribute to open the section -->
+  <v-pane expanded>
+    <v-pane-header>
+      Pane header
+    </v-pane-header>
+
+    <v-pane-content>
+      Pane content 
+    </v-pane-content>
+  </v-pane>
+
+  <v-pane >
+    <v-pane-header>
+      Pane header 
+    </v-pane-header>
+
+    <v-pane-content>
+      Pane content 
+    </v-pane-content>
+  </v-pane>
+
+ <v-pane >
+    <v-pane-header>
+      Pane header 
+    </v-pane-header>
+
+    <v-pane-content>
+      Pane content 
+    </v-pane-content>
+  </v-pane>
+   <v-pane >
+    <v-pane-header>
+      Pane header 
+    </v-pane-header>
+
+    <v-pane-content>
+      Pane content 
+    </v-pane-content>
+  </v-pane>
+   <v-pane >
+    <v-pane-header>
+      Pane header 
+    </v-pane-header>
+
+    <v-pane-content>
+      Pane content 
+    </v-pane-content>
+  </v-pane>
+   <v-pane >
+    <v-pane-header>
+      Pane header 
+    </v-pane-header>
+
+    <v-pane-content>
+      Pane content 
+    </v-pane-content>
+  </v-pane>
+</v-accordion>

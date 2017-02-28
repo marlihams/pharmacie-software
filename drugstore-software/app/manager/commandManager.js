@@ -3,8 +3,7 @@ var Command = require('mongoose').model('Commande');
 var DailySale = require('mongoose').model('DailySale');
 var Utility=require('../controllers/utilities');
 var DailySaleManager=require('../manager/dailySaleManager.js');
-
-
+var async = require("async");
 
 /**
 * function for getting all the command  
@@ -64,48 +63,71 @@ exports.filterCommand=function(req,res){
 
 exports.create=function(req,res,callback){
 
-	var commande=new Command(req.body);
+	var commande=new Command(req.body.data ? req.body.date: req.body);
 	var dailySaleTitle=req.body.dailySaleTitle;
-	/*console.log("affichage de commande");
-	console.log(commande);*/
-
-	commande.save(function(err){
-
-		if (err){
-			console.log("error while creating the Command");
-			return null;
-		}
-
-		var dailySale; 
+	commande.chiffreAffaire=commande.calculChiffreAffaire();
+	commande.benefice=commande.calculBenefice();
+	commande.totalProduits=commande.getTotalProduit();
+	console.log("affichage de commande");
+	console.log(commande);
+	
 		DailySaleManager.getCurrentDailySale(function(dailySale){
 		
 			if (!dailySale){
 				
 				 	dailySale=new DailySale({
-					title:dailySaleTitle? dailySaleTitle:""+(new Date()).getTime(),
-					chiffreAffaire:commande.calculChiffreAffaire(),
+					title:dailySaleTitle? dailySaleTitle:(new Date()).toDateString(),
 					etat:false,
 					date:Utility.getCurrentDate(),
-					benefice:commande.calculBenefice(),
+					benefice:0,
+					chiffreAffaire:0,
 					totalProduits:0
 				});
 			}
 				
 			dailySale.commandes.push(commande._id);
-
-	
-			dailySale.totalProduits+=commande.produits.length;
-			/*console.log("****displaying the new/old dailySale*********");
+			commande.dailySaleId=dailySale._id;
+			
+			dailySale.totalProduits+=commande.totalProduits;
+			dailySale.chiffreAffaire+=commande.chiffreAffaire;
+			dailySale.benefice+=commande.benefice;
+		/*console.log("****displaying the new/old dailySale*********");
 			console.log(dailySale);*/
-			dailySale.save(function(err){
-				if(err){
-					console.log("error while saving the dailySale");
+		async.parallel({
+			
+			"commande":function(callback){
+				commande.save(function(err){
+					console.log("save commande");
+					if (err){
+						console.log("error while creating the Command");
+							callback(err,"commande");
+					}
+						callback(null,commande);
+				});
+			},
+			"dailySale":function(callback){
+				console.log("save dailySale");
+					dailySale.save(function(err){
+						if(err){
+							console.log("error while saving the dailySale");
+							callback(err,"dailySale");
+						}
+						callback(null,dailySale);
+					});
+				
+			}
+		},
+		    function(err,results){
+
+				if (err){
+					console.log(results);
+					console.log(err);
 					return null;
 				}
-				return res.json(dailySale);
-			});
-		});
-
+				console.log("**********results*********");
+				res.json(results);
+			}
+		);
 	});
 
 };
@@ -157,10 +179,10 @@ exports.updateCommand=function(req,res){
 
 	console.log("updating the command having the _id : "+req.commande.id);
 
-	
+	var updatedCommand=req.body.data ? req.body.data :req.body;
 	// Array.prototype.push.apply(req.body.details,req.commande.details);
 
-	 Command.findByIdAndUpdate(req.commande.id,req.body,{new:true},function(err,commande){
+	 Command.findByIdAndUpdate(req.commande.id,updatedCommand,{new:true},function(err,commande){
 
 	 	if (err){
 	 		return next(err);
@@ -176,18 +198,67 @@ exports.updateCommand=function(req,res){
 
 exports.deleteCommand=function(req,res,next){
 
-	req.commande.remove(function(err,nbdeleted){
+		if (req.commande){
+			req.commande.remove(function(err,commande){
 
-		 if (err) {
-            return next(err);
-        }
-        else {
-            res.json({
-            	"deleted":nbdeleted,
-            	"element":req.commande
-            });
-        }
+				 if (err) {
+		            return next(err);
+		        }
+		        else {
+			       DailySaleManager.deleteCommandeOnDailySale(req,res,req.commande);
+		    	}
+
+			});
+		}
+		else{
+			console.log("nothing to delete the commande does not exist");
+		}
+};
+
+
+exports.depanneFunction=function(req,res){
+	console.log("depanneFunction");
+
+	Command.find().exec(function(err,commandes){
+
+		if (err){
+
+			console.log("error on getAllCommand function");
+			console.log(err);
+			return null;
+		}
+		async.each(
+			commandes,
+			function(commande,callback){
+
+				commande.benefice=commande.calculBenefice();
+				commande.chiffreAffaire=commande.calculChiffreAffaire();
+				commande.totalProduits=commande.getTotalProduit();
+					commande.save(function(err){
+
+					if (err){
+						console.log("error while creating the Command");
+							callback(err,"commande");
+					}
+					else{
+
+						callback(null);
+					}
+				});
+		},
+		function(err){
+
+			if (err){
+				console.log("an error occured on the function depanneFunction");
+				console.log(err);
+				return res.json({message:"depanneFunction failed"});
+			}
+			else{
+				console.log("all the command has been updated :function depanneFunction");
+				res.json({message:"depanned Function succed"});
+			}
+		});
+		
 	});
 
 };
-

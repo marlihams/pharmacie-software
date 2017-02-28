@@ -1,1 +1,1 @@
-angular.module("commandeList",[]);
+angular.module("commandeList",['core']);

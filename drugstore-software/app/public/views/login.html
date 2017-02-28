@@ -5,11 +5,11 @@
       <h3>Pharmacie-paris</h3>
   </div>
 
-  <div ng-show="error" class="alert alert-danger row">
+  <div ng-show="error" class="alert alert-danger row errorInfo">
       <span>{{ error.message }}</span>
   </div>
 
-  <form ng-submit="logIn()" style="margin-top:30px;">
+  <form ng-submit="logIn()" style="margin-top:30px">
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
       </div>
@@ -25,4 +25,4 @@
 </div>
 
 </div>
- 
+

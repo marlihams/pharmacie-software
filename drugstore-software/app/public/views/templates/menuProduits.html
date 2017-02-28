@@ -1,10 +1,31 @@
   <div class="drugstore-search-zone">
+  		<div class="w3-container  w3-cell">
+  		<h5 class="filtre-zone">zone de filtre</h5>
+  		</div>
+  		
+        <div class="w3-container  w3-cell">
+        <md-select  placeholder="choix option" class="md-no-underline" ng-model="champFiltreProduit" required>
+          <md-option value="expirationDate">date d'expiration</md-option>
+          <md-option value="quantite">quantite</md-option>
+          <md-option value="prix">prix</md-option>
+        </md-select>
+        </div>
+        <div class="w3-container  w3-cell">
+        <md-select  class="md-no-underline" ng-model="fitreOrdre" placeholder="ordre de tri" >
+          <md-option value="0">decroissant</md-option>
+          <md-option value="1">croissant</md-option>
+        </md-select>
+        </div>
+
+        <div class="w3-container  w3-cell">
+  			<button class="w3-btn w3-teal w3-round w3-hover-blue" ng-click="filtreProduit(champFiltreProduit,fitreOrdre)">Trier</button>
+  		</div>
 			  	<div class="container  drugstore-search-zone-only w3-right ">
         				<div class="col-md-12">
     						<div class="form-group">
                 				<div class="icon-addon addon-md drugstore-search-zone-input">
                  				   <input type="text" placeholder="search..." class="form-control" ng-model="searchText">
-                 				   <label for="email" class="glyphicon glyphicon-search" ></label>
+                 				   <label for="search" class="glyphicon glyphicon-search" ></label>
                 				</div>
             				</div>
 		 				</div>
@@ -14,20 +35,48 @@
 		  <hr/>
 		 <div class="w3-panel title-drugstore-content w3-text-indigo ">
 			  
-			    	<h3>{{title}}</h3>
+			    	<h3>{{title}}
+			    	</h3>
 			  
 		  </div>
 		 
 			 <div class="drugstore-menu-content" >
-			   	<table class="w3-table w3-striped w3-centered ">
+			 <md-list>
+	<md-list-item ng-repeat="produit in produits |filter :searchText" ng-class="{'produit-line-impair':$odd}" >
+   						
+    					<div class="md-list-item-text list-date-cell-parent">
+    					<p class="list-date-cell">
+    					{{produit.details.sort(sortDetailProduit(a,b))[0].expirationDate | date: 'MMM' }}
+    					</p>
+    					<p class="list-date-cell">
+    				
+    					{{produit.details[0].expirationDate | date: 'yyyy' }}
+    					
+    					</p>
+    					</div>
+    					<div class="md-list-item-text">
+    					 <img alt="premiere lettre produit" ng-src="img/lettre/{{produit.nom | FirstLetterFilter}}.PNG"/>
+    					</div>
+	 					<div class="md-list-item-text" >
+	 						<h4>{{produit.nom}}</h4>
+	 						<p class="md-caption">{{produit.description}}</p>
+	 					</div>
+	 					<div>{{calculQuantiteProduit(produit.details)}}</div>
+	 					<div class="list-price-cell">{{produit.prixVente |CurrencyFilter}}</div>
+	 					<div>
+	 					
+	 					 <md-icon md-svg-src="img/aspect_ratio_black_24.svg" class="md-secondary md-hue-2" ng-click="produitsDetails($event,produit.details)">
+	 					 	 <md-tooltip>informations complémentaires</md-tooltip>
+	 					 </md-icon>
+	 					
+	 					
+	 					 </div>
+	 					
+   
+  </md-list-item>
+</md-list>
+			   
+			   <!-- <button ng-click="changeUrl()"> test changement</button> -->
+			</div>
 
-			   		<tr ng-repeat="element in homeCollection |filter:searchText">
-		 				<td>{{$index + 1}}</td>
-	 					<td>{{element.nom}}</td>
-	 					<td>{{element.quantite}}</td>
-	 					<td>{{element.prixVente}}</td>
-					</tr>
 
-			   	</table>
-			   	
-	</div>

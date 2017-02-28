@@ -1,9 +1,9 @@
 angular.module("commandeList").
 		component("commandeList",{
 	templateUrl:"component/commande-list/commande-list.template.html",
-	controller: [function CommandeListController(){
+	controller: ['DrugStoreService',function CommandeListController(DrugStoreService){
 		var ctrl=this;
-		 console.log("calling compenent module");
+		
 		/* var CommandeSchema = new Schema({
     title:String,
     client: mongoose.Schema.Types.ObjectId,
@@ -18,6 +18,9 @@ angular.module("commandeList").
     }]
 });
 */
+    console.log("component");
+ 
+
 		this.accordionData = [
         {
             "title" : "holden",

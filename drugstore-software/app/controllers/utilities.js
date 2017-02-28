@@ -42,11 +42,10 @@ exports.getCurrentWeekInterval=function(){
 	}
 	else{
 
-		var today=getDateCorrectedFormat();
+	
 		beginWeek=getDateCorrectedFormat();
-		beginWeek.setDate(today.getDate()-today.getDay());
 		endWeek=getDateCorrectedFormat();
-		endWeek.setDate(beginWeek.getDate()+6)
+		beginWeek.setDate(beginWeek.getDate()-7);
 
 		weekObject={
 			"beginWeek":beginWeek,
@@ -72,12 +71,12 @@ exports.getDateFromMonth=function(){
 
 
 function getDateCorrectedFormat(date){
-	var d;
-	if (date) 
-		var d=new Date();
-	else
-		d=date;
-	return new Date(d.getFullYear(),(d.getMonth()+1),d.getDate());
+	
+	var d= date ? date:(new Date());
+	var dateFormat=""+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+	console.log(dateFormat);
+
+	return new Date(dateFormat);
 }
 
 exports.getDateCorrectedFormat=getDateCorrectedFormat;
@@ -91,7 +90,7 @@ exports.getCurrentDate=function(){
  }
  else{
 
- 	return new Date();
+ 	return getDateCorrectedFormat();
 
  }
 

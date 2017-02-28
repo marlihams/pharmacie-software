@@ -18,7 +18,7 @@ exports.getHomeData=function(req,res){
 	console.log("function HomeData");
 	
 async.parallel({
-	weekDailySale:function(callback){
+	weeklySale:function(callback){
 		DailySaleManager.getWeeklyDailySales(function(dailySales){
 			
 			callback(null,dailySales);
@@ -41,14 +41,14 @@ async.parallel({
 			callback(null,worstMonthDailySale);
 		});
 	},
-	produits:function(callback){
+	/*produits:function(callback){
 
 		ProduitManager.getAllProduit(function(produits){
 
 				callback(null,produits);
 		});
 	
-	},
+	},*/
 	currentDailySale:function(callback){
 		DailySaleManager.getCurrentDailySale(function(currentDailySale){
 			console.log("function currentDailySale");
@@ -62,8 +62,6 @@ async.parallel({
 			console.log(err);
 		}
 		 
-		/*console.log("function results");
-		console.log(results);*/
 		return res.json(results);
 	});	
 

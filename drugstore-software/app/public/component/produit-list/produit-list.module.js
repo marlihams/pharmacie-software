@@ -1,1 +1,1 @@
-angular.module("produitList",['core.home']);
+angular.module("produitList",['core']);

@@ -14,7 +14,11 @@ function($stateProvider, $urlRouterProvider) {
       controller: 'AuthCtrl',
       onEnter: ['$state', 'UserAuthService', function($state, auth){
         if(auth.isLoggedIn()){
+          console.log("user logged");
           $state.go('home');
+        }
+        else{
+          console.log("authentification failed");
         }
       }]
     })
@@ -28,7 +32,7 @@ function($stateProvider, $urlRouterProvider) {
         $state.go('home');
       }
     }]
-  })
+  });
 
   $urlRouterProvider.otherwise('pharmacie-paris');
 }]);

@@ -4,7 +4,7 @@ module.exports = function(app){
   var DailysaleManager=require('../manager/DailysaleManager.js');
  // app.route('/register').post(users.create);
 
- app.route('/homeData').get(HomeController.getHomeData);
+ app.route('/drugStore').get(HomeController.getHomeData);
  
 
  app.post('/dailySale/*',function(req,res,next){
@@ -29,9 +29,8 @@ module.exports = function(app){
 
 /* app.route('/dailySale/produits').get(homeController.productMenu);
 */
-app.route('/dailySales/quantity').get(DailysaleManager.getLotsOfDailySales);
-app.route('/dailySales/filterDailySale').get(DailysaleManager.filterDailySale);
-
+app.route('/dailySale').get(DailysaleManager.filterDailySale);
+ // app.route('/dailySale').get(DailysaleManager.findMonthDailySale);
 
  app.param('dailySaleId',DailysaleManager.findDailySaleById);
  

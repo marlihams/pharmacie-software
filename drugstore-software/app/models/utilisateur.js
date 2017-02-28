@@ -15,7 +15,7 @@ var UtilisateurSchema = new Schema({
     // telephone: {type:String, required:true},
     telephone:String,
     dateNaissance:Date,
-    profil:{type:String, enum:['pharmacien','admin','superAdmin']},
+    profil:{type:String, enum:['pharmacien','admin','superAdmin'], required:true},
     salt:String,
     hash:String
 });
@@ -44,11 +44,13 @@ UtilisateurSchema.methods.generateJWT = function() {
   var today = new Date();
   var exp = new Date();
   exp.setDate(today.getDate() +1);
+  console.log("expiration date on server "+ exp);
+  console.log("milliseconde " +exp.getTime()); 
 
   return jwt.sign({
     _id: this._id,
     username: this.username,
-    exp: parseInt(exp.getTime() / 1000),
+    exp: exp.getTime(),
   },process.env.secretName);
 };
 

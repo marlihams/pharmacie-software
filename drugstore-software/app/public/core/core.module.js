@@ -1,1 +1,1 @@
-angular.module('core', ['core.user','core.dailySale']);
+angular.module('core', ['core.service','core.filter']);

@@ -46,14 +46,14 @@ DailySaleSchema.statics.bestMonthDailySale=function(date,callback){
  var beginDayOfMonth=new Date(date.getFullYear(),date.getMonth(),1);
  var lastDayOfMonth=new Date(date.getFullYear(),date.getMonth()+1,0);
   var bestDailySale=null;
-  console.log("month vaut : "+ beginDayOfMonth +"year : "+lastDayOfMonth);
+  /*console.log("month vaut : "+ beginDayOfMonth +"year : "+lastDayOfMonth);*/
   this.find({date:{'$gte':beginDayOfMonth,"$lte":lastDayOfMonth}})
     .exec(function(err,dailySales){
         if (err){
             console.log("error on static function bestMonthDailySale");
             console.log(err);
         }
-        console.log(dailySales);
+       /* console.log(dailySales);*/
         bestDailySale=dailySales[0];
         dailySales.forEach(function(dailySale){
 
@@ -72,14 +72,14 @@ DailySaleSchema.statics.worstMonthDailySale=function(date,callback){
  var beginDayOfMonth=new Date(date.getFullYear(),date.getMonth(),1);
  var lastDayOfMonth=new Date(date.getFullYear(),date.getMonth()+1,0);
   var bestDailySale=null;
-  console.log("month vaut : "+ beginDayOfMonth +"year : "+lastDayOfMonth);
+ /* console.log("month vaut : "+ beginDayOfMonth +"year : "+lastDayOfMonth);*/
   this.find({date:{'$gte':beginDayOfMonth,"$lte":lastDayOfMonth}})
     .exec(function(err,dailySales){
         if (err){
             console.log("error on static function bestMonthDailySale");
             console.log(err);
         }
-        console.log(dailySales);
+     /*   console.log(dailySales);*/
         bestDailySale=dailySales[0];
         dailySales.forEach(function(dailySale){
 
@@ -95,7 +95,7 @@ DailySaleSchema.statics.worstMonthDailySale=function(date,callback){
 
 DailySaleSchema.statics.findDailySaleByDate=function(date,callback){
 
-  this.findOne({date:date},function(err,dailySale){
+  this.findOne({date:date}).populate("commandes").exec(function(err,dailySale){
 
     if (err){
         console.log("error on static findDailySaleByDate");

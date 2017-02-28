@@ -30,7 +30,7 @@ module.exports = function(app){
 /* app.route('/dailySale/produits').get(homeController.productMenu);
 */
 app.route('/produit').post(ProduitManager.create);
-app.route('/produits').get(ProduitManager.getAll);
+app.route('/produit').get(ProduitManager.getAll);
 
 
  app.param('produitId',ProduitManager.findProduitById);

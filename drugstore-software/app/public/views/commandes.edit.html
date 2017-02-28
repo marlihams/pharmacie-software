@@ -1,0 +1,58 @@
+<div id="commande-view-container">
+<div ui-view="header" class="header">
+	<!-- nesting the header  -->
+</div> 
+<div class="row commande-section-view-body">
+<section class="commande-section-header">
+<!--  partie top
+ -->
+ 	
+ </section>
+ <section class="commande-section-body">
+ 	<!-- partie gauche -->
+
+
+ 	<div>
+ 	<h4>{{title}}</h4>
+ 	</div>
+ 	<div>
+ 		
+ 		 <md-list>
+	<md-list-item ng-repeat="produit in commande.produits" ng-class="{'produit-line-impair':$odd}" >
+   						
+    					<div class="md-list-item-text list-date-cell-parent">
+    					<p class="list-date-cell">
+    					{{produit.produit.details[0].expirationDate | date: 'MMM' }}
+    					</p>
+    					<p class="list-date-cell">
+    				
+    					{{produit.produit.details[0].expirationDate | date: 'yyyy' }}
+    					
+    					</p>
+    					</div>
+    					<div class="md-list-item-text">
+    					 <img alt="premiere lettre produit" ng-src="img/lettre/{{ produit.produit.nom | FirstLetterFilter }}.PNG"/>
+    					</div>
+	 					<div class="md-list-item-text" >
+	 						{{produit.produit.nom}}
+	 					</div>
+	 					<div class="list-price-cell">{{produit.produit.prixVente |CurrencyFilter}}</div>
+
+	 					<div class="md-list-item-text">
+			               <img alt="total produit" ng-src="img/chiffre/{{produit.quantite < 10 ? produit.quantite:'plus'}}.PNG"/>
+			            </div>
+		 				<div class="list-price-cell">{{ prixTotal(produit) | CurrencyFilter}}
+                        </div>
+	 					
+   
+  </md-list-item>
+</md-list>
+
+
+ 	</div>
+
+
+ </section>
+
+</div>
+</div>

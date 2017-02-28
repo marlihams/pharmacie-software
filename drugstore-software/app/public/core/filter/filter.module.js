@@ -1,0 +1,1 @@
+angular.module('core.filter', ['core.currencyFilter','core.statusFilter','core.firstLetterFilter']);

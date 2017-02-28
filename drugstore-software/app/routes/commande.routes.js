@@ -27,11 +27,17 @@ module.exports = function(app){
   .delete(CommandManager.deleteCommand);
 app.route('/commande').post(CommandManager.create);
 app.route('/commandes').get(CommandManager.getAllCommand);
+app.route('/commandes/depanneFunction').get(CommandManager.depanneFunction);
 //app.route('/commandes/filterCommande').get(CommandManager.filterCommand);
 
 
  app.param('commandeId',CommandManager.findCommandById);
  
- 
+
 
 };
+
+
+
+
+	

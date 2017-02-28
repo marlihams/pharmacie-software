@@ -23,7 +23,8 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "protractor": "^4.0.9",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "v-accordion": "^1.6.0"
   },
   "scripts": {
     "postinstall": "bower install",
