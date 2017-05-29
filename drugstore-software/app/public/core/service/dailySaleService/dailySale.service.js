@@ -1,5 +1,5 @@
 angular.module("core.dailySale")
-		.factory('DailySaleService',['$resource',function($resource){
+		.factory('DailySaleService',['$resource','UserAuthService',function($resource,UserAuthService){
 			var dailySaleService={};
 			dailySaleService.quantity=0;
 			dailySaleService.request= $resource('/dailySale/:id',{id:'@_id'},{
@@ -23,7 +23,7 @@ angular.module("core.dailySale")
 
 			dailySaleService.getDailySaleById=function(dailySaleId,cb){
 
-				dailySaleService.request.get({id:dailySaleId},function(dailySale){
+				return dailySaleService.request.get({id:dailySaleId,"userId":UserAuthService.getUserId()},function(dailySale){
 					if (cb)
 						cb(dailySale);
 					else
@@ -43,7 +43,7 @@ angular.module("core.dailySale")
 
 			dailySaleService.filterDailySaleByDate=function(beginDate,endDate,cb){
 				
-				dailySaleService.request.filter({beginDate:beginDate,endDate:endDate},function(dailySales){
+				dailySaleService.request.filter({beginDate:beginDate,endDate:endDate,"userId":UserAuthService.getUserId()},function(dailySales){
 					
 					if (cb){
 						cb(dailySales);
@@ -63,11 +63,12 @@ angular.module("core.dailySale")
 				
 					dailySaleService.quantity+=quantity;
 				
-				var dailySales=dailySaleService.request.filter({quantity:dailySaleService.quantity},function(){
+				var dailySales=dailySaleService.request.filter({quantity:dailySaleService.quantity,"userId":UserAuthService.getUserId()},function(){
 					if (cb){
 						cb(dailySales);
 					}
 				});
+				return dailySales;
 
 			};
 
@@ -101,9 +102,9 @@ angular.module("core.dailySale")
 			dailySaleService.update=function(dailySale,cb){
 				var $dailySale=new dailySaleService.request();
 				 $dailySale._id=dailySale._id;
-				delete dailySale.commandes;
+		
 				 $dailySale.data=dailySale;
-				$dailySale.$update(function(updateDailySale){
+				$dailySale.$update({"userId":UserAuthService.getUserId()},function(updateDailySale){
 					
 					if (cb){
 
@@ -121,7 +122,7 @@ angular.module("core.dailySale")
 			*/
 
 			dailySaleService.getMonthDailySale=function(cb){
-				var dailySales=dailySaleService.request.query(function(dailySales){
+				var dailySales=dailySaleService.request.query({"userId":UserAuthService.getUserId()},function(dailySales){
 
 					if (cb) cb(dailySales);
 

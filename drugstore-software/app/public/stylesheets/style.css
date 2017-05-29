@@ -6,6 +6,9 @@ html{
 	position:relative;
 
 }
+md-content{
+	background-color: white;
+}
 
 
 body {
@@ -18,6 +21,7 @@ body {
 
 }
 
+
 .header{
 	position: fixed;
     top: 0;
@@ -26,13 +30,12 @@ body {
     z-index: 1000;
 }
 
-.home-view-body{
-	margin-top:75px; 
-	z-index: 12;
-	overflow: auto;
+.page-right-content{
 
+	background-color: white !important;
 }
-#view-frame,#auth-view-container,#home-view-container,#commande-view-container{
+
+#view-frame,#auth-view-container,#home-view-container,#commande-view-container,#produit-view-container{
 	position: absolute;
 	height: 100%;
   	width: 100%;
@@ -372,7 +375,6 @@ margin:0px;
 
 .dailySale-valider{
 	color:#23bbea !important;
-	
 }
 
 
@@ -449,12 +451,20 @@ background-color: #f8fafd;/*#f5f5f5;*/
 }
 
 .title-drugstore-content{
+	display: flex;
+	justify-content: space-between;
 	background-color: #f5f5f5 !important;
-	
 	height: 50px;
-	
+}
+.title-drugstore-content > .title{
+	flex:auto;
+
 }
 
+.title-drugstore-content .menuProduit-button-modify{
+	width: 8rem;
+	padding-left: 20px;
+}
 .drugstore-menu-content ,.title-drugstore-content{
 	width: 98%;
 }
@@ -589,7 +599,7 @@ md-list-item .md-list-item-text{
 .drugstore-search-zone .form-container {
 	/*width: 150px;
 	height: 100px;
-	border:1px solid red;
+	
 	
 	padding-bottom: 10px; */
 	background-color: #f5f5f5 !important;
@@ -725,7 +735,7 @@ md-list-item:hover{
 }
 
 .menu-drugstore .menu-drugstore-icon md-icon{
-	margin-bottom:15px; 
+	/*margin-bottom:15px;*/ 
 }
 .center-block {
     float: none;
@@ -733,6 +743,9 @@ md-list-item:hover{
     margin-right: auto;
 }
 
+.command-new md-select{
+	width:auto;
+}
 /* ****************** COMMANDE  PART ***************   */
 
 
@@ -740,7 +753,7 @@ md-list-item:hover{
 	background-color: 
 }*/
 
-.commande-section-view-body{
+.produit-section-view-body,.commande-section-view-body, .home-view-body{
 	position: relative;
     background-color: #f8fafd;
     height: 90%;
@@ -752,7 +765,7 @@ md-list-item:hover{
     overflow: auto;
 }
 .commande-section-header{
-	height: 43%;
+	height: 45%;
 	padding:4px;
 	background: #1c314c url(/img/font-command-picture.jpg) center 50% no-repeat;
     background-size: cover;
@@ -760,7 +773,13 @@ md-list-item:hover{
 	color: #dfe5f1;
 }
 
+.commande-edit-section-header{
+	height: 50%;
+}
 
+.commande-edit-section{
+	font-family: monospace;
+}
 .commande-section-body{
 	
 	margin:auto;
@@ -799,6 +818,8 @@ md-list-item:hover{
 	padding-top:15px;
 
 }
+
+
 .commande-section-header-info > div:hover{
     background-color: rgba(171,207,222,0.3);
     cursor: pointer;
@@ -809,7 +830,7 @@ md-list-item:hover{
 	padding-top: 20px;
 	font-size: 20px;
   	font-family: cursive;
-    color: #fff;
+    color:#6bd636;
 	
 }
 .commande-section-header-info span{
@@ -818,8 +839,461 @@ md-list-item:hover{
     line-height: 20px;
 }
 
- 
+.commande-section-header label, .commande-section-header input{
+	color: #fff !important;
+	font-weight:normal !important; 
+}
+.commande-section-header input{
+	border-color:white !important; 
+}
+.commande-section-header input:focus{
+	border-color:#df137a !important; 
+}
+ .commande-section-header label{
+ 	font-size: 14px;
+ }
+/*md-autocomplete span{
+	color:black !important; 
+}*/
+.autocomplete-dropdown{
+	/* background-color: red !important;
+	color:black !important; */
+}
 
+.commande-edit-section,.depense-edit-section{
+ 	display: flex;
+ 	justify-content: space-around;
+ 	align-items:flex-start;
+}
+
+.commande-edit-section .commande-section-produit{
+
+	width:60%;
+	min-height:60%;
+}
+
+.commande-edit-section .commande-section-selected-produit{
+
+	width:35%;
+	min-height:60%;
+}
+.commande-section-selected-produit .section-button{
+	display: flex;
+	justify-content: space-around;
+	    margin-bottom: 5px;
+}
+
+.md-list-item-number{
+	width: 60px;
+}
+
+
+.commande-title-content{
+	display: flex;
+	justify-content: space-around;
+}
+
+
+.search-zone-only{
+	margin-left:5px; 
+	width:60%;
+}
+
+.error-message{
+	text-align: center;
+}
+
+.input-error{
+
+	border: 1px solid rgb(221,44,0);
+}
+
+.facture{
+
+/*	background-color:rgb(250,250,250);*/
+ font-size: 14px;
+    font-weight: 500;
+    color: rgba(0,0,0,0.54);
+    font:17px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+.facture-info{
+	display: flex;
+	justify-content: space-between;
+	background-color:rgb(250,250,250);
+}
+.total-produit{
+	margin-right:5px; 
+}
+.facture-title{
+    font-size: 13px;
+  
+    color: rgba(0,0,0,0.54);
+    font-family: monospace;
+}
+
+.facture-info-input{
+	padding-top:5px;
+}
+.toast-info-class .md-toast-text{
+	
+	color: white !important;
+	font-family: Monospace;
+	font-weight:bold;
+}
+.toast-success-class .md-toast-text{
+	
+	color: green !important;
+	font-family: Monospace;
+	font-weight:bold;
+}
+
+.toast-failed-class .md-toast-text{
+	color: rgba(255,64,129,0.87) !important;
+	font-family: Monospace;
+	font-weight:bold;
+}
+.toast-success-class, .toast-failed-class{
+	margin-top:65px;
+}
+.toast-info-class{
+	margin-top:13%;
+	margin-right:20%; 
+}
+
+.facture-first{
+
+	width: 40%;
+}
+.facture-second{
+	
+	width: 20%;
+	text-align: center;
+}
+/*.facture-third{
+		
+		width: 15%;
+		text-align: center;
+}*/
+.facture-quart{
+		
+		width: 40%;
+		text-align: right;
+}
+.produit-number{
+	margin-bottom: 0px;
+}
+
+
+/************* dailySale details *****************/
+.button-save-dailySale{
+	margin-top: 30px;
+}
+.dailySale-details{
+	font-family: monospace;
+}
+.dailySale-details-col1{
+	width: 10%;
+	text-align: center;
+} 
+.dailySale-details-col2{
+	width:30%;
+	text-align: center;
+} 
+.dailySale-details-col3{
+	width:8%;
+	text-align: center;
+} 
+.dailySale-details-col4{
+	width:20%;
+	text-align: center;
+} 
+.dailySale-details-col5{
+	width:5%;
+	text-align: center;
+} 
+
+.ligne-selected{
+	    border-left: 2px solid #df137a;
+}
+.dailySale-detail-statut md-select-menu{
+	margin-top: 60px;
+}
+
+/* menu Produit List */
+.menuProduit-list-1{
+	width: 5%;	
+	text-align: left;
+	padding-top:5px;
+	margin-top: 15px;
+	
+}
+.menuProduit-list-2{
+	width: 8%;
+	
+	text-align: center;
+}
+.menuProduit-list-3{
+	width: 7%;
+	
+	
+	text-align: center;
+}
+.menuProduit-list-4{
+	width:45%;
+	
+	
+}
+.menuProduit-list-5{
+	width:8%;
+	text-align: center;
+	
+	
+}
+.menuProduit-list-6{
+	width:20%;
+	text-align: center;
+	
+}
+
+/***************** Produit *********************/
+.produit-section-view-body{
+	background-color: #11253b;
+}
+.produit-section-content-body{
+	
+	width:80%;
+	height: 100%;
+	margin:auto;
+	
+	padding: auto;
+	font-family: Monospace ;
+
+}
+.produit-header-section{
+	display: flex;
+	justify-content: space-between;
+	color:white ;
+	height: 5%;
+	margin-top:5%;
+	
+}
+.produit-header-section .title{
+	flex:1;
+	/*border:1px solid blue;*/
+	font-family: Monospace;
+}
+.produit-header-section .close{
+	width:5%;
+	/*border: 1px solid yellow;*/
+	text-align: center;
+}
+
+.produit-header-section .close md-icon:focus{
+	border: 0;
+	outline: none;
+}
+.produit-content-section{
+	background-color: white;
+	min-height: 90%;
+}
+
+.produit-content-section .produit-form{
+	width: 60%;
+	margin:auto;
+	margin-top: 20px;
+
+}
+
+/*.produit-new-content-section {
+	position: absolute;
+}*/
+
+.produit-new-content-section .produit-form{
+	width: 90%;
+	margin:auto;
+	margin-top: 20px;
+	font-family: monospace;
+
+}
+
+.produit-new-content-section h6{
+	font-family: monospace !important;
+}
+
+.depense-form md-input-container{
+	font-family: monospace;
+	font-size: 14px;
+}
+.produit-new-content-section md-input-container,
+ .produit-content-section md-input-container{
+	width: 100%;
+}
+md-input-container label{
+	font-size: 14px;
+	font-family: monospace;
+	font-weight: normal;
+}
+
+.produit-table-content{	width: 100%;
+	overflow: hidden;
+}
+.produit-table-content table{
+
+	display: inline-block;
+	width: 98%;
+	margin-left: 1%;
+}
+.produit-table-content table tr{
+	display: inherit;
+
+}
+
+.produit-table-content table
+	.md-datepicker-input-container {
+		width:90px;
+	}
+
+/*table .colEmp {
+	width: 100px;
+}
+table .colQuant{
+	width:100px;
+}*/
+
+table  .checkbox-cell{
+	width: 60px;
+}
+
+.produit-detail md-checkbox{
+	margin-top: 8px;
+}
+
+.button-produit-details{
+	margin-top: 20px;
+	margin-bottom: 30px;
+	width:50%;
+	color: red;
+	
+}
+.button-produit-new-details{
+	display: flex;
+	justify-content: space-around;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	width:60%;
+	color: red;
+	
+}
+
+.button-produit-details button{
+	text-transform: monospace;
+}
+.button-form-details{
+	display: flex;
+	justify-content: space-between;
+	width:80%;
+}
+
+.button-form-details button{
+	font-family: Monospace !important;
+}
+
+.error-zone{
+	text-align: center;
+	width: 100%;
+	margin-bottom: 30px;
+}
+
+choose-file{
+	width: 60%;
+	margin:auto;
+}
+choose-file .file-label{
+	margin:auto;
+	color: #3f51b5;
+    font-weight: normal;
+    font-family: monospace;
+    margin-right: 5px;
+}
+choose-file .file-button{
+	margin:auto;
+}
+h6-title:{
+	font-family:monospace;
+}
+.button-download{
+	margin:auto;
+	padding:auto;
+	display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+/********* DEPENSE *********************/
+
+.depense-section-header{
+	height: 35%;
+	padding:4px;
+	background: #1c314c url(/img/font-command-picture.jpg) center 50% no-repeat;
+    background-size: cover;
+    position: relative;
+	color: #dfe5f1;
+}
+
+.depense-section-title{
+
+	margin-top:30px;
+}
+
+.depense-edit-section .depense-section-creation{
+
+	width:35%;
+	min-height:60%;
+}
+.depense-edit-section .depense-section-historique{
+
+	width:60%;
+	min-height:60%;
+}
+
+.depense-section-header-info >div{
+	width:20%;
+}
+
+
+.depense-form,.depense-section-content-info {
+	width: 90%;
+	margin-left:5%;
+	margin-bottom: 50px; 	
+}
+.depense-section-content-info table{
+	font-family: monospace;
+	font-size: 15px;
+}
+.depense-section-content-info td{
+	font-size: 14px;
+}
+.depense-section-content-info .md-subheader{
+	background-color: white;
+}
+
+.validate-depense{
+	background-color: #2196F3 !important;
+}
+
+.depense-search{
+	display: flex;
+	justify-content: space-around;
+}
+
+
+
+.dialog-validation .md-dialog-content{
+	font-family: monospace;
+}
+.dialog-validation  md-dialog-actions{
+
+	margin:auto;
+}
 /***************************  OTHER ***************************** */
 
 .input-group .icon-addon .form-control {
@@ -902,4 +1376,4 @@ md-list-item:hover{
     color: #2580db;
 }
 
-
+    

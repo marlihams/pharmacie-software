@@ -1,11 +1,11 @@
 
 
 module.exports = function(app){
-  var users = require('../controllers/userManager');
+  var users = require('../manager/userManager.js');
   app.route('/register').post(users.create);
   app.route('/login').post(users.read);
   app.route('/update/:userId').put(users.update);
-
+ 
   /*those two following method the user should be authenticated first before accessing it */
   app.route('/users').get(users.list).delete(users.deleteAll);
   app.route('/users/:userId').post(users.findUser)

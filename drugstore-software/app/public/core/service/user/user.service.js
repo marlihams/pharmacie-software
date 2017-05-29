@@ -45,7 +45,6 @@ angular.module('core.user')
 	  if(auth.isLoggedIn()){
 	    var token = auth.getToken();
 	    var payload = JSON.parse($window.atob(token.split('.')[1]));
-
 	    return payload.username;
 	  }
 	};
@@ -77,6 +76,13 @@ angular.module('core.user')
 	*/
 	auth.logOut = function(){
 	 $window.localStorage.removeItem(auth.tokenName);
+	};
+	auth.getUserId=()=>{
+		if(auth.isLoggedIn()){
+	    var token = auth.getToken();
+	    var payload = JSON.parse($window.atob(token.split('.')[1]));
+	    return payload._id;
+	  }
 	};
 
 

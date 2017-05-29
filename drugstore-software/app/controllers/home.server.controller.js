@@ -5,6 +5,7 @@
 var DailySaleManager=require('../manager/dailySaleManager.js');
 var utilities=require('./utilities');
 var ProduitManager=require('../manager/ProduitManager.js');
+var DepenseManager=require('../manager/DepenseManager.js');
 
 
 /**
@@ -41,27 +42,29 @@ async.parallel({
 			callback(null,worstMonthDailySale);
 		});
 	},
-	/*produits:function(callback){
-
-		ProduitManager.getAllProduit(function(produits){
-
-				callback(null,produits);
-		});
-	
-	},*/
 	currentDailySale:function(callback){
 		DailySaleManager.getCurrentDailySale(function(currentDailySale){
 			console.log("function currentDailySale");
 			callback(null,currentDailySale);
 		});
+	},
+	depenseInfo:function(callback){
+		DepenseManager.getDepenseInfo(req,res,function(obj){
+			console.log("function getDepenseInfo");
+			callback(null,obj);
+		});
 	}
 	},function(err,results){
 
+		console.log("****** "+results.depenseInfo+ " *********")
 		if (err){
 			console.log("error in getHomeData");
 			console.log(err);
 		}
-		 
+		 if (results.depenseInfo.length==0){
+
+		 	delete results.depenseInfo;
+		 }
 		return res.json(results);
 	});	
 

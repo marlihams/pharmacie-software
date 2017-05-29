@@ -1,8 +1,8 @@
 var DailySale = require('mongoose').model('DailySale');
 var Utility=require('../controllers/utilities');
+var CommandManager=require('../manager/commandManager.js');
 
 /**
-
 	@function getWeeklyDailySales
 	get the dailySales of the current week 
 	@param {callback} mandatory callback to manage the dailySales of the week  
@@ -243,6 +243,8 @@ function filterDailySaleByDate(req,res){
 
 };
 
+
+
 /**
 * update the daily sale with the id  in parameter
 * @function updateDailySale 
@@ -255,23 +257,64 @@ exports.updateDailySale=function(req,res){
 	// findDailySaleById is called automatically
 
 
-	console.log("updating the user having the _id : "+req.dailySale.id);
+	//console.log("updating the user having the _id : "+req.dailySale.id);
 	
 
    var updateDailySale=req.body.data ? req.body.data:req.body;
-   delete updateDailySale.commandes;
+   
+ 	CommandManager.keepCommandUpToDate(req,res,updateDailySale.deletedCommand);
+    delete updateDailySale.deletedCommand;
+    delete updateDailySale.date;
+  // commande non deleted
+   console.log("updateDailySale");
+   console.log(updateDailySale);
+   updateDailySale.commandes= updateDailySale.commandes !=null? updateDailySale.commandes.map(commande=>commande._id):[];
 
+
+ //  updateDailySale.commandes=remainCommand;
+  /* console.log("remain commande===>");
+   console.log(remainCommand);
+   console.log(updateDailySale);
+*/
 	 DailySale.findByIdAndUpdate(req.dailySale.id,updateDailySale,{new:true},function(err,dailySale){
 
 	 	if (err){
-	 		return next(err);
+
+	 		var message="echec sauvegarde des modifications !!!";
+	 		res.json(Utility.buildResponse(err,message,false));
+
 	 	}
-	 	else{
-	 		res.json(dailySale);
-	 	}
+	 		populateDailySale(dailySale,(err,populatedDailySale)=>{
+
+	 			if(err){
+					// manage the err;
+					return null;	 				
+	 			}
+	 			var message="modifications ont été sauvegardées !!!";
+	 		res.json(Utility.buildResponse(populatedDailySale,message,true));
+
+	 		});	
 	 });
 };
 
+/**
+* function for populate a DailySale from the database by id
+* @function populateDailySale 
+* @params {DailySale} dailySale to populate
+* @params {function} callback to manage the dailySale populated
+ */
+
+function populateDailySale(dailySale,callback){
+
+	dailySale.populate("commandes",function(err,populatedDailySale){
+
+				  					if (err){
+				  						callback(err,populatedDailySale);
+				  					}
+				  					else
+				  					callback(null,populatedDailySale);
+				  				});
+};
 /**
 * middleware for getting a DailySale from the database by id
 * @function getDailySaleById 

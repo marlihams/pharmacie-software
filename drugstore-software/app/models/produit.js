@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var ProduitSchema = new Schema({
-    nom: {type:String, index:true,required:true, lowercase:true},
+    nom: {type:String,required:true, lowercase:true,unique:true},
     description: String,
     prixAchat: Number,
     prixVente: Number,
@@ -20,3 +20,4 @@ var ProduitSchema = new Schema({
 });
 
 mongoose.model('Produit', ProduitSchema);
+

@@ -4,10 +4,12 @@ angular.module('commande')
 '$scope',
 '$state',
 'currentCommand',
-function($scope,$state,currentCommand){
+'DrugStoreService',
+function($scope,$state,currentCommand,DrugStoreService){
 
 
 $scope.commande=currentCommand;
+DrugStoreService.setOldState(MENU.COMMANDE);
 
 $scope.prixTotal=(produit)=>{
   if (produit) {
@@ -22,7 +24,7 @@ $scope.resteAPayer=()=> {
 
   if ($scope.commande) {
 
-    return $scope.commande.payer ? Number.parseInt($scope.commande.chiffreAffaire,10)-Number.parseInt($scope.commande.montantPayer,10) : '0' ;
+    return $scope.commande.payer ? Number.parseInt($scope.commande.chiffreAffaire,10)-(Number.parseInt($scope.commande.montantPayer,10)+Number.parseInt($scope.commande.reduction,10)) : '0' ;
   }
   else{
     console.log("scope.commande can not be empty");

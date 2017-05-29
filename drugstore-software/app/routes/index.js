@@ -2,7 +2,8 @@
 
 module.exports = function(app) {
 	//the controller associated to the file
-     var index = require('../controllers/indexManager');
+     var indexManager = require('../manager/indexManager');
 
-     app.get('/', index.render);
+     app.get('/', indexManager.render);
+     app.get('/pharmacie-paris-error',indexManager.error);
 };

@@ -11,6 +11,7 @@ var CommandeSchema = new Schema({
     clientType:{type:String,enum:['recommandeur','abonner','autre'],default:'autre'},
     payer: Boolean,
     montantPayer:Number,
+    reduction:{type:Number,default:0},
     chiffreAffaire:{type:Number,default:0},
     totalProduits:{type:Number,default:0},
     benefice:{type:Number,default:0},
@@ -58,12 +59,13 @@ CommandeSchema.methods.calculChiffreAffaire=function(){
 CommandeSchema.methods.calculBenefice=function(){
     var produits=this.produits;
     var total=0;
-     return produits.reduce((accum,produit,index)=>{
+     var ben= produits.reduce((accum,produit,index)=>{
          total=(produit.produit.prixVente-produit.produit.prixAchat) * produits[index].quantite;
             
             return  accum==0? total:(accum+total);
 
      },0);
+     return ben-this.reduction;
 
 };
 

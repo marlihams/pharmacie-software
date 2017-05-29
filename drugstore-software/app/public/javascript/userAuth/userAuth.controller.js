@@ -12,7 +12,7 @@ function($scope, $state, UserAuthService){
     UserAuthService.register($scope.user).error(function(error){
       $scope.error = error;
     }).then(function(){
-      $state.go('home');
+      $state.go('home',{"selectedMenu":MENU.PRODUIT});
     });
   };
 
@@ -20,7 +20,7 @@ function($scope, $state, UserAuthService){
     UserAuthService.logIn($scope.user).error(function(error){
       $scope.error = error;
     }).then(function(){
-      $state.go('home');
+      $state.go('home',{"selectedMenu":MENU.PRODUIT});
     });
   };
   

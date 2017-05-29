@@ -1,117 +1,113 @@
 
-angular.module('home')
-.controller('HomeCtrl',[
+angular.module('produit')
+.controller('ProduitEditController',[
 '$scope',
 '$state',
 'UserAuthService',
 'DrugStoreService',
-'DailySaleService',
-'commonData',
-function($scope,$state,UserAuthService,DrugStoreService,DailySaleService,commonData){
+'ProduitService',
+'produit',
+function($scope,$state,UserAuthService,DrugStoreService,ProduitService,produit){
 
-  $scope.isLoggedIn = UserAuthService.isLoggedIn;
- 
-  $scope.logOut = UserAuthService.logOut;
 
-  var getweekSale=function(){
+  DrugStoreService.setOldState(MENU.PRODUIT);
 
-    if (!DrugStoreService.hasCommand()){
-       
-           commonData.weeklySale.splice(0,1);
-      }
-      return commonData.weeklySale;
+  console.log("produit  edit controller");
+  console.log(produit);
+  $scope.produit=produit;
+  $scope.deletedDetails=[];
+
+  $scope.initializeExpirationDate=(details)=>{
+
+    return new Date(details.expirationDate);
   };
+  $scope.initializeKey=(details)=>{
 
-  DrugStoreService.setCurrentDailySale(commonData.currentDailySale);
-  $scope.currentDailySale=commonData.currentDailySale;
-  $scope.recentDailySale=commonData.currentDailySale;
-
-  $scope.worstDailySale=commonData.worstMonthDailySale;
-  $scope.bestDailySale=commonData.bestMonthDailySale;
-  
-  $scope.weeklyDailySale=getweekSale();
-
-
-  $scope.statusTooltip=function(){
-
-   return $scope.currentDailySale.etat ? "vente valider" :"vente non valider";
+    return details._id !=undefined ? details._id : details.key;
   };
-
-  $scope.currentSale=function(){
-
-    if (DrugStoreService.hasCommand()){ 
-      // si une commande a déjà été passé aujourdhui
-      return commonData.currentDailySale.chiffreAffaire;
+  $scope.addDetailToDelete=(details)=>{
+     $scope.isStarted=false;
+    if (details.selected){
+         $scope.deletedDetails.push(details.key);
+         $scope.nbSelected++;
     }
     else{
-      return 0;
+      var index= $scope.deletedDetails.indexOf(details.key);
+        $scope.deletedDetails.splice(index,1);
+         $scope.nbSelected--;
     }
+   
   };
 
-  $scope.changeCurrentDailySale=function(dailysaleId){
-    DailySaleService.getDailySaleById(
-      dailysaleId,
-      function(dailySale){
+  $scope.addDetails=()=>{
 
-        $scope.currentDailySale=dailySale;
-        DrugStoreService.setCurrentDailySale(dailySale);
+    $scope.produit.details.push({
+      "expirationDate":new Date(),
+      "emplacement":"",
+      "quantite":"",
+      "key":""+ $scope.produit.details.length
+    });
+
+  };
+  $scope.deleteSelectedDetails=()=>{
+     var index=-1;
+     $scope.isStarted=true;
+     if ($scope.deletedDetails.length >0){
+       $scope.deletedDetails.forEach((id)=>{
+
+        index=$scope.produit.details.findIndex((element)=>{
+           return element.key===id;
+          });
+
+        if(index!=-1)
+          $scope.produit.details.splice(index,1);
         
+       });
+       $scope.deletedDetails=[];
+       $scope.nbSelected=0;
+      $scope.isStarted=false;
+     }
 
-      }
-    );
   };
 
-$scope.allExpanded=false;
-$scope.toogleAllCommand=function(){
-  console.log("toogleAllCommand");
-  if ($scope.allExpanded){
-    $scope.accordion.collapseAll();
-    $scope.allExpanded=false;
-  }
-  else{
-     $scope.accordion.expandAll();
-    $scope.allExpanded=true;
-  }
-};
- 
+  $scope.saveChangement=()=>{
+    console.log("*******save produit*********");
+    console.log($scope.produit);
+    ProduitService.update($scope.produit,function(response){
+      if (response.status){
+        DrugStoreService.succesRequest(response.message);
+      //  $scope.produit=response.data;
+      console.log(response.data);
+        $state.go("home",{"selectedMenu":MENU.PRODUIT});
+      }
+    },(error)=>{
+       DrugStoreService.failedRequest(error.data.message);
+    });
 
-  $scope.title="liste des produits";
-  $scope.menuClass="menu-selected-element";
- 
-   $scope.currentNavItem = 'page1';
-  /* $scope.command={
+  };
+  $scope.close=()=>{
+      console.log("close edit produit");
+     $state.go("home",{"selectedMenu":MENU.PRODUIT});
+  };
 
-     "_id": "586fecb1ebc70c21ecee62ec",
-        "title": "586fecb1ebc70c21ecee62ec",
-        "payer": true,
-        "__v": 0,
-        "produits": [
-          {
-            "produit": {
-              "details": [
-                {
-                  "_id": "586e5c5ccf4bf538d8ef07fb",
-                  "quantite": 210,
-                  "expirationDate": "2022-12-06T00:00:00.000Z",
-                  "emplacement": "2F"
-                }
-              ],
-              "__v": 0,
-              "prixVente": 100,
-              "prixAchat": 80,
-              "description": " 3 comprimet par jour pendant 12 jours. deconseiller pour les femmes enceinte",
-              "nom": "ibuprofène",
-              "_id": "586e5c5ccf4bf538d8ef07fa"
-            },
-            "quantite": 4,
-            "_id": "586fecb1ebc70c21ecee62f0"
-          }],
-         
-        "dailySaleId": null,
-        "date": "2016-12-23T00:00:00.000Z",
-        "clientType": "autre",
-        "client": null
-      };*/
+  $scope.deleteProduit=()=>{
+
+  if (confirm("voulez vous vraiment supprimer ce produit")){
+    ProduitService.delete($scope.produit._id,function(response){
+
+      if (response.status){
+        DrugStoreService.succesRequest(response.message);
+         $state.go("home",{"selectedMenu":MENU.PRODUIT});
+      }
+    },function(error){
+
+        DrugStoreService.infoRequest(error.message);
+
+    });
+    }
+
+  };
+
 }
 ]);
 

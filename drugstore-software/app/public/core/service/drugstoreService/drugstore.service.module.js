@@ -1,1 +1,1 @@
-angular.module('core.drugstore', ['ngResource']);
+angular.module('core.drugstore', ['ngResource','ngMaterial']);

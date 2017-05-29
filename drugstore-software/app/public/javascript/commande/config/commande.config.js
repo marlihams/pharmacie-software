@@ -41,7 +41,7 @@ angular.module('drugStoreSoftware')
 
         }
         })
-        .state('commande.edit', {
+        .state('commande-edit', {
           url: '/commande/edit/:commandId',
            onEnter: ['$state', 'UserAuthService', function($state, auth){
              console.log("commande edit state");
@@ -51,20 +51,73 @@ angular.module('drugStoreSoftware')
               }
 
              }],
-          templateUrl:"views/commande.edit.html",
-          controller:'CommandeEditController',
-         resolve:{
+            views:{
+            '':{
+              templateUrl:"views/commandes.edit.html",
+            controller:'CommandeEditController',
+            },
+            'header@commande-edit': { 
+              templateUrl: 'views/templates/header.html',
+              controller:'HeaderController'
+             },
+          },
+          resolve:{
           
-            currentCommand:function($staeParams,CommandeService){
+            currentCommand:function($stateParams,CommandeService){
 
-             /* return DailySaleService.getMonthDailySale().$promise.then(function(dailySales){
-                return dailySales;
-              });*/
+              return CommandeService.getCommandById($stateParams.commandId.trim())
+              .$promise.then(function(commande){
+                console.log("resolve dans currentCommand");
 
+                  return commande;
+              });
+
+            },
+            produitList:function(ProduitService){
+
+              return ProduitService.getAll().$promise.then(function(data){
+                return data;
+              });
+             
+            },
+            clientList:function(){
+              return null;
             }
-
-        }
+          }
         })
+        .state('commande-new', {
+          url: '/commande/create',
+           onEnter: ['$state', 'UserAuthService', function($state, auth){
+             console.log("commande edit state");
+              if(!auth.isLoggedIn()){
+                console.log("connexion expired");
+                 $state.go("pharmacie-paris");
+              }
+
+             }],
+            views:{
+            '':{
+              templateUrl:"views/commandes.new.html",
+            controller:'CommandeNewController',
+            },
+            'header@commande-new': { 
+              templateUrl: 'views/templates/header.html',
+              controller:'HeaderController'
+             },
+          },
+          resolve:{
+            produitList:function(ProduitService){
+
+              return ProduitService.getAll().$promise.then(function(data){
+                return data;
+              });
+             
+            },
+            clientList:function(){
+              return null;
+            }
+          }
+        });
     }]);
 
 

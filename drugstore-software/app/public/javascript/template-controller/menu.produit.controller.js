@@ -10,7 +10,8 @@ angular.module("controller.template")
 
 
 		$scope.produits=produitList;
-
+		DrugStoreService.setProduits(produitList);
+		
 $scope.sortDetailProduit=(a,b)=>{
 	if (a && b){
 		var d1=new Date(a.expirationDate);
@@ -128,6 +129,19 @@ $scope.imgName=(ProduitName)=>{
 		      });
 
    
+    };
+    $scope.changeProductSelected=(produit)=>{
+    	$scope.isProduitSelected=true;
+    	if($scope.selectedProduct !=null){
+    		$scope.selectedProduct.selected=false;
+    	}
+    	produit.selected=true;
+    	$scope.selectedProduct=produit;
+    };
+    $scope.editSelectedProduct=()=>{
+
+    	$state.go("produit-edit",{produitId:$scope.selectedProduct._id});
+
     };
 
 /*$scope.changeUrl=function(){

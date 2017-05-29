@@ -2,6 +2,8 @@
 
 var passport = require('passport');
 var User = require('mongoose').model('Utilisateur');
+var IndexManager=require('../manager/indexManager.js');
+var UserManager=require('../manager/userManager.js');
 
 
 /**
@@ -18,9 +20,10 @@ exports.create=function(req,res,next){
 	if(!req.body){
    		return res.status(400).json({message: 'Please fill out all fields'});
   	}
-
-	 var user = new User(req.body);
-	 user.setPassword(req.body.password);
+  	var params=req.body.data ? req.body.data:req.body;
+  	console.log(params);
+	 var user = new User(params);
+	 user.setPassword(params.password);
 	 user.save(function (err){
 	    if(err){ 
 	    	return next(err); }
@@ -83,8 +86,9 @@ exports.list=function(req,res,next){
 * @params {objectId} id
 */
 
-exports.userByID = function(req, res, next, id) {
+function getUserByID(req, res, next, id) {
 	
+
     User.findOne({
             _id: id
         },
@@ -98,13 +102,35 @@ exports.userByID = function(req, res, next, id) {
             }
         }
     );
+}
+
+exports.userByID =getUserByID;
+
+exports.findUser=function(req,res,next){
+
+		res.json(req.user);
 };
 
-
-exports.findUser=function(req,res){
-
-	res.json(req.user);
+exports.populatedUser=function(req,res,next){
+	console.log("****method populatedUser*******");
+	if (req.user){
+		return next();
+	}
+	else if (req.query.userId){
+		// next is call inside this method
+	 console.log(req.query.userId);
+	return 	getUserByID(req,res,next,req.query.userId.trim());
+	}
+	else{
+		// error page should be displayed to the user
+		var err=new Error("Authorization denied !!! please contact the administrator");
+  			err.status=403;
+ 
+  		return IndexManager.error(err,req,res,next);
+  			//res.redirect(500,"/pharmacie-paris-error");
+	}
 };
+
 
 /**
 * update  the information of a user inside the database

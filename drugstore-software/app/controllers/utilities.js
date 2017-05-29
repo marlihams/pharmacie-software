@@ -72,7 +72,7 @@ exports.getDateFromMonth=function(){
 
 function getDateCorrectedFormat(date){
 	
-	var d= date ? date:(new Date());
+	var d= date ? new Date(date):(new Date());
 	var dateFormat=""+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 	console.log(dateFormat);
 
@@ -95,3 +95,21 @@ exports.getCurrentDate=function(){
  }
 
 };
+
+exports.getErrorMessage = function(err) {
+    if (err.errors) {
+        for (var errName in err.errors) {
+            if (err.errors[errName].message) return err.errors[errName].message;
+        }
+    } else {
+        return 'Unknown server error';
+    }
+};
+exports.buildResponse=function(obj,message,status){
+
+	return {
+		"data":obj,
+		"message":message,
+		"status":status
+	};
+}

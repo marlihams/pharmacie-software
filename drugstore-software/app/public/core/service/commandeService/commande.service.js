@@ -1,5 +1,5 @@
 angular.module("core.commande")
-		.factory('CommandeService',['$resource',function($resource){
+		.factory('CommandeService',['$resource','UserAuthService',function($resource,UserAuthService){
 			var commandeService={};
 			commandeService.quantity=0;
 			commandeService.request= $resource('/commande/:id',{id:'@_id'},{
@@ -23,7 +23,7 @@ angular.module("core.commande")
 
 			commandeService.getCommandById=function(commandeId,cb){
 
-				return commandeService.request.get({id:commandeId},function(commande){
+				return commandeService.request.get({id:commandeId,"userId":UserAuthService.getUserId()},function(commande){
 					
 					if (cb)
 						cb(commande);
@@ -44,7 +44,7 @@ angular.module("core.commande")
 				$commandService._id=command._id;
 				$commandService.data=command;
 
-				$commandService.$update(function(updatedCommand){
+				$commandService.$update({"userId":UserAuthService.getUserId()},function(updatedCommand){
 					if (cb){
 
 						cb(updatedCommand);
@@ -67,7 +67,7 @@ angular.module("core.commande")
 				 
 				if(commandId){
 					$commandService._id=commandId;
-					$commandService.$delete(function(dailySale){
+					$commandService.$delete({"userId":UserAuthService.getUserId()},function(dailySale){
 
 						if (cb){
 							cb(dailySale);
@@ -91,7 +91,7 @@ angular.module("core.commande")
 				var $commandService=new commandeService.request();
 				 $commandService.data=command;
 				if(command){
-					$commandService.$save(function(rep){
+					$commandService.$save({"userId":UserAuthService.getUserId()},function(rep){
 
 						if (cb){
 							cb(rep);

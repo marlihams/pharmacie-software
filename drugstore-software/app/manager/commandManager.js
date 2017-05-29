@@ -4,7 +4,8 @@ var DailySale = require('mongoose').model('DailySale');
 var Utility=require('../controllers/utilities');
 var DailySaleManager=require('../manager/dailySaleManager.js');
 var async = require("async");
-
+var ProduitManager=require('../manager/produitManager.js');
+const MESSAGE=require('../manager/messageManager.js')();
 /**
 * function for getting all the command  
 * @function getAllCommand 
@@ -20,7 +21,8 @@ exports.getAllCommand=function(req,res){
 
 			console.log("error on getAllCommand function");
 			console.log(err);
-			return null;
+			err.status(500);
+			return res.json({err_code:0,status:false,message:MESSAGE.M1+MESSAGE.M2,stack:err.stack});
 		}
 		res.json(commandes);
 	});
@@ -44,7 +46,8 @@ exports.filterCommand=function(req,res){
 			if (err){
 				 console.log("error on function filtercommandes");
 				 console.log(err);
-				 return null;
+				err.status(500);
+			return res.json({err_code:1,status:false,message:MESSAGE.M17,stack:err.stack});
 			}
 			// sending result to the client
 			res.json(commandes);
@@ -63,18 +66,27 @@ exports.filterCommand=function(req,res){
 
 exports.create=function(req,res,callback){
 
-	var commande=new Command(req.body.data ? req.body.date: req.body);
-	var dailySaleTitle=req.body.dailySaleTitle;
+	/*console.log("données de la Request");
+	console.log(req.body.data);*/
+	var commande=new Command(req.body.data ? req.body.data: req.body);
 	commande.chiffreAffaire=commande.calculChiffreAffaire();
 	commande.benefice=commande.calculBenefice();
 	commande.totalProduits=commande.getTotalProduit();
-	console.log("affichage de commande");
+	if((commande.montantPayer + commande.reduction) != commande.chiffreAffaire){
+		commande.payer=false;
+	}
+	else{
+		commande.payer=true;
+	}
+	ProduitManager.updateProduitQuantite(commande.produits);
+
+/*	console.log("affichage de la nouvelle commande");
 	console.log(commande);
-	
+*/
 		DailySaleManager.getCurrentDailySale(function(dailySale){
 		
 			if (!dailySale){
-				
+				console.log("pas de dailySale trouvé");
 				 	dailySale=new DailySale({
 					title:dailySaleTitle? dailySaleTitle:(new Date()).toDateString(),
 					etat:false,
@@ -84,35 +96,38 @@ exports.create=function(req,res,callback){
 					totalProduits:0
 				});
 			}
-				
-			dailySale.commandes.push(commande._id);
+
+			dailySale.commandes.unshift(commande._id);
 			commande.dailySaleId=dailySale._id;
 			
 			dailySale.totalProduits+=commande.totalProduits;
 			dailySale.chiffreAffaire+=commande.chiffreAffaire;
 			dailySale.benefice+=commande.benefice;
-		/*console.log("****displaying the new/old dailySale*********");
-			console.log(dailySale);*/
+	//	console.log(" display des données sauvegarde ******");
 		async.parallel({
 			
 			"commande":function(callback){
-				commande.save(function(err){
+				commande.save(function(err,command){
 					console.log("save commande");
 					if (err){
 						console.log("error while creating the Command");
 							callback(err,"commande");
 					}
-						callback(null,commande);
+				//	console.log("commande bien sauvegarde");
+				//	console.log(command);
+						callback(null,command);
 				});
 			},
 			"dailySale":function(callback){
-				console.log("save dailySale");
-					dailySale.save(function(err){
+				/*console.log("save dailySale");*/
+					dailySale.save(function(err,dailySal){
 						if(err){
 							console.log("error while saving the dailySale");
 							callback(err,"dailySale");
 						}
-						callback(null,dailySale);
+			//			console.log("dailySale bien sauvegarde");
+			//		console.log(dailySal);
+						callback(null,dailySal);
 					});
 				
 			}
@@ -120,17 +135,22 @@ exports.create=function(req,res,callback){
 		    function(err,results){
 
 				if (err){
-					console.log(results);
-					console.log(err);
-					return null;
+					
+					//console.log(err);
+					err.status(500);
+					return res.json({err_code:1,status:false,message:MESSAGE.M17,stack:err.stack});
+
 				}
 				console.log("**********results*********");
-				res.json(results);
+				var message="création commande  SUCCESS !!!";
+
+				res.json(Utility.buildResponse(results,message,true));
 			}
 		);
 	});
 
 };
+
 
 /**
 * middleware for getting a  from the database by id
@@ -141,7 +161,7 @@ exports.create=function(req,res,callback){
 * @params {objectId} id
 */
 
-exports.findCommandById = function(req, res, next, id) {
+var findCommandById=function(req, res, next, id) {
 	
 	console.log("function findCommandById");
     Command.findOne({
@@ -159,6 +179,8 @@ exports.findCommandById = function(req, res, next, id) {
         }
     );
 };
+
+exports.findCommandById =findCommandById;
 
 /**
 * function for getting a commande from the database by id
@@ -180,6 +202,12 @@ exports.updateCommand=function(req,res){
 	console.log("updating the command having the _id : "+req.commande.id);
 
 	var updatedCommand=req.body.data ? req.body.data :req.body;
+	 if (updatedCommand.chiffreAffaire==(updatedCommand.montantPayer+updatedCommand.reduction)){
+	 	updatedCommand.payer=true;
+	 }
+	 else{
+	 	updatedCommand.payer=false;
+	 }
 	// Array.prototype.push.apply(req.body.details,req.commande.details);
 
 	 Command.findByIdAndUpdate(req.commande.id,updatedCommand,{new:true},function(err,commande){
@@ -188,7 +216,8 @@ exports.updateCommand=function(req,res){
 	 		return next(err);
 	 	}
 	 	else{
-	 		res.json(commande);
+	 		var message="mise à jour réussi !!! SUCCESS";
+	 		res.json(Utility.buildResponse(commande,message,true));
 	 	}
 	 });
 };
@@ -215,8 +244,44 @@ exports.deleteCommand=function(req,res,next){
 		}
 };
 
+exports.keepCommandUpToDate=function(req,res,arrayOfCommandId){
 
-exports.depanneFunction=function(req,res){
+	if (arrayOfCommandId !=null){
+		async.each(arrayOfCommandId,(commandId,callback)=>{
+
+			findCommandById(req,res,function(err){
+			 if (err){
+			 	callback(err)
+			 }	
+				if (req.commande){
+					req.commande.remove(function(err,commande){
+
+					 if (err) {
+			            callback(err)
+			        }
+		     			callback()
+					});
+				}	
+			}
+			,commandId)
+		},
+		function(err){
+			if (err){
+				console.log("the process of deleting command failed  keepCommandUpToDate ");
+				return null;
+			}
+			else{
+
+				  console.log("all the command has been deleted");
+			}
+		});
+
+	}
+
+};
+
+
+/*exports.depanneFunction=function(req,res){
 	console.log("depanneFunction");
 
 	Command.find().exec(function(err,commandes){
@@ -261,4 +326,4 @@ exports.depanneFunction=function(req,res){
 		
 	});
 
-};
+};*/

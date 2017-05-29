@@ -114,7 +114,7 @@
 		
 		<div   class="panel panel-default daily-sale-globale-body">
 		  <div class="panel-body">
-		  <div ui-view="menu">
+		  <div ui-view="menu" class="page-right-content">
 		  <!--  template for menu  -->
 		  </div>
 		  
@@ -133,18 +133,22 @@
 
 			  <md-toolbar>
 			   <md-fab-actions>
-			     <md-button aria-label="Add commande">
-			       <md-icon md-svg-src="/img/credit_card_24.svg"></md-icon>
+			     <md-button aria-label="Add commande" ng-click="createNewCommand()">
+			       <md-icon md-svg-src="/img/shopping_cart_24.svg"></md-icon>
 			       	Gestion des Commandes
 			     </md-button>
 
-			     <md-button aria-label="Add produit">
+			     <md-button aria-label="Add produit" ng-click="createNewProduit()">
 			       <md-icon md-svg-src="/img/note_add_24.svg"></md-icon>
 			       Gestion des Produits
 			     </md-button>
-			     <md-button aria-label="Add client">
+			     <md-button aria-label="Add client" ng-click="createNewClient()">
 			       <md-icon md-svg-src="/img/supervisor_24.svg"></md-icon>
 			       Gestion  des Clients
+			     </md-button>
+			      <md-button aria-label="add depense" ng-click="displayDepense()">
+			       <md-icon md-svg-src="/img/credit_card_24.svg"></md-icon>
+			       Gestion  des Depenses
 			     </md-button>
 			   </md-fab-actions>
 			  </md-toolbar>

@@ -39,6 +39,8 @@ $scope.closeMenu=function(){
 
 	$scope.modifierCommande=(commande)=>{
 		console.log("editerCommande");
+		console.log(commande._id);
+		$state.go("commande-edit",{commandId:commande._id});
 
 	};
 

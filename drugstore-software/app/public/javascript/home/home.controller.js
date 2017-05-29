@@ -12,6 +12,9 @@ function($scope,$state,UserAuthService,DrugStoreService,DailySaleService,commonD
   $scope.isLoggedIn = UserAuthService.isLoggedIn;
  
   $scope.logOut = UserAuthService.logOut;
+  if (commonData.depenseInfo){
+    DrugStoreService.infoRequest(commonData.depenseInfo);
+  }
 
   var getweekSale=function(){
 
@@ -79,39 +82,22 @@ $scope.toogleAllCommand=function(){
   $scope.menuClass="menu-selected-element";
  
    $scope.currentNavItem = 'page1';
-  /* $scope.command={
+ 
+ $scope. createNewProduit=function(){
+  $state.go("produit-new");
+ };
 
-     "_id": "586fecb1ebc70c21ecee62ec",
-        "title": "586fecb1ebc70c21ecee62ec",
-        "payer": true,
-        "__v": 0,
-        "produits": [
-          {
-            "produit": {
-              "details": [
-                {
-                  "_id": "586e5c5ccf4bf538d8ef07fb",
-                  "quantite": 210,
-                  "expirationDate": "2022-12-06T00:00:00.000Z",
-                  "emplacement": "2F"
-                }
-              ],
-              "__v": 0,
-              "prixVente": 100,
-              "prixAchat": 80,
-              "description": " 3 comprimet par jour pendant 12 jours. deconseiller pour les femmes enceinte",
-              "nom": "ibuprofène",
-              "_id": "586e5c5ccf4bf538d8ef07fa"
-            },
-            "quantite": 4,
-            "_id": "586fecb1ebc70c21ecee62f0"
-          }],
-         
-        "dailySaleId": null,
-        "date": "2016-12-23T00:00:00.000Z",
-        "clientType": "autre",
-        "client": null
-      };*/
+$scope. createNewClient=function(){
+  alert("contacter votre administrateur du site");
+ };
+
+$scope.createNewCommand=function(){
+  $state.go("commande-new");
+ };
+
+  $scope.displayDepense=function(){
+  $state.go("depense-edit");
+ };
 }
 ]);
 

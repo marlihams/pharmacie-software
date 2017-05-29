@@ -21,7 +21,7 @@ angular.module("controller.template")
 
 		$scope.myDateEnd=new Date();
 		$scope.maxDate=new Date();
-
+		
 		 $scope.filtreDailySale=function(key,type){
 		 /*	type= type ? Number.parseInt(type):1;
 		if(key){
@@ -70,8 +70,7 @@ angular.module("controller.template")
 
 		 $scope.showDailySaleDetails=function(dailySale){
 
-		 	console.log("changement de state affichage dailySale details");
-
+		 	$state.go("dailySale-details",{dailySaleId:dailySale._id});
 		 };
 
 		 $scope.displayMoreDailySale=function(){

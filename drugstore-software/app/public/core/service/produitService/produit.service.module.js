@@ -1,1 +1,1 @@
-angular.module('core.produit', ['ngResource']);
+angular.module('core.produit', ['ngResource','ngFileUpload']);

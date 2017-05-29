@@ -4,6 +4,8 @@
 module.exports = function(app){
 
   var CommandManager=require('../manager/commandManager.js');
+  var UserManager=require('../manager/userManager.js');
+
 
 
  app.post('/commande/*',function(req,res,next){
@@ -20,14 +22,14 @@ module.exports = function(app){
 
 	});
 
-
+app.route('/commande/*').all(UserManager.populatedUser);
   app.route('/commande/:commandeId')
   .get(CommandManager.getUniqueCommand)
   .put(CommandManager.updateCommand)
   .delete(CommandManager.deleteCommand);
 app.route('/commande').post(CommandManager.create);
 app.route('/commandes').get(CommandManager.getAllCommand);
-app.route('/commandes/depanneFunction').get(CommandManager.depanneFunction);
+//app.route('/commandes/depanneFunction').get(CommandManager.depanneFunction);
 //app.route('/commandes/filterCommande').get(CommandManager.filterCommand);
 
 

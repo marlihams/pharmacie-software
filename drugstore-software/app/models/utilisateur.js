@@ -12,10 +12,9 @@ var UtilisateurSchema = new Schema({
     name: String,
     username:{type:String, index:true,lowercase:true,unique:true},
     prenom: String,
-    // telephone: {type:String, required:true},
     telephone:String,
     dateNaissance:Date,
-    profil:{type:String, enum:['pharmacien','admin','superAdmin'], required:true},
+    profil:{type:String, enum:['pharmacien','admin','actionnaire','superAdmin'], required:true},
     salt:String,
     hash:String
 });
@@ -25,7 +24,8 @@ var UtilisateurSchema = new Schema({
 
 UtilisateurSchema.methods.setPassword = function(password){
   this.salt = crypto.randomBytes(16).toString('hex');
-
+console.log(password);
+console.log(this.salt);
   this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
 };
 

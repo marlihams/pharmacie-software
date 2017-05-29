@@ -48,10 +48,6 @@
                   <p class="list-date-cell">
                   {{commande.date | date :'hh:mm a' }}  
                   </p>
-                <!--   <p class="list-date-cell">
-                
-                  {{commande.date | date :'mm'}}          
-                  </p> -->
               </div>
               
             <div class="md-list-item-text" >
@@ -68,11 +64,11 @@
       <div>
                 <md-menu md-position-mode="target-right target" class="md-secondary">
                     <md-button class="md-icon-button ">
-                       <md-icon md-svg-src="img/list_black_24.svg" class="md-secondary md-hue-2" ng-mouseenter="$mdOpenMenu($event)">
+                       <md-icon md-svg-src="img/list_black_24.svg" class="md-hue-2" ng-mouseenter="$mdMenu.open($event)">
                <!--  <md-tooltip>informations complementaires</md-tooltip>  -->
                </md-icon>
                     </md-button>
-                    <md-menu-content width="3"  ng-mouseleave="closeMenu()">
+                    <md-menu-content width="3"  ng-mouseleave="$mdMenu.close()">
                       <md-menu-item>
                         <md-button ng-click="displayDetails(commande)">
                           details

@@ -1,1 +1,1 @@
-angular.module('home', ['core']);
+angular.module('dailySale', ['core']);

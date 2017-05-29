@@ -1,1 +1,1 @@
-angular.module('core', ['core.service','core.filter']);
+angular.module('core', ['core.service','core.filter','core.directive']);

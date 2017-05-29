@@ -10,6 +10,7 @@ module.exports = function() {
 	var logger = require('morgan');
 	var cookieParser = require('cookie-parser');
 	var bodyParser = require('body-parser');
+	 
 
 
 	    // view engine setup
@@ -38,6 +39,7 @@ module.exports = function() {
 	   require('../routes/dailySale.routes.js')(app);
 	   require('../routes/produit.routes.js')(app);
 	   require('../routes/commande.routes.js')(app);
+	   require('../routes/depense.routes.js')(app);
 	   require('../test_data/fill_database.js')(app);
 
 	/*end of the routes section */
@@ -54,10 +56,14 @@ module.exports = function() {
 	// development error handler
 	// will print stacktrace
 	if (app.get('env') === 'development') {
+		
 	  app.use(function(err, req, res, next) {
+	  /*	console.log("******dev error handler*****");*/
 	    res.status(err.status || 500);
-	    res.render('error', {
+	    res.json({
 	      message: err.message,
+	      status:err.status,
+	      stack:err.stack,
 	      error: err
 	    });
 	  });
@@ -66,6 +72,7 @@ module.exports = function() {
 	// production error handler
 	// no stacktraces leaked to user
 	app.use(function(err, req, res, next) {
+		console.log("*******prod error handler********");
 	  res.status(err.status || 500);
 	  res.render('error', {
 	    message: err.message,
